@@ -1,0 +1,22 @@
+{
+  "name": "tacolento_project",
+  "version": "1.0.0",
+  "description": "Progetto per il corso di Ingegneria del Software 2 - UNITN",
+  "main": "helloworld.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrancescoPenasa/TacoLento_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FrancescoPenasa/TacoLento_project/issues"
+  },
+  "homepage": "https://github.com/FrancescoPenasa/TacoLento_project#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
