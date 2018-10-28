@@ -2,7 +2,7 @@
   "name": "tacolento_project",
   "version": "1.0.0",
   "description": "Progetto per il corso di Ingegneria del Software 2 - UNITN",
-  "main": "helloworld.js",
+  "main": "app.js",
   "scripts": {
     "start": "node helloworld.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/FrancescoPenasa/TacoLento_project.git"
   },
-  "author": "",
+  "author": "Gabriele Berrera, Francesco Penasa, Daniele Scal, Andrea Zerbini",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/FrancescoPenasa/TacoLento_project/issues"
