@@ -5,13 +5,13 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FrancescoPenasa/TacoLento_project.git"
   },
-  "author": "Gabriele Berrera, Francesco Penasa, Daniele Scal, Andrea Zerbini",
+  "author": "Gabriele Berrera, Francesco Penasa, Daniele Scalice, Andrea Zerbini",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/FrancescoPenasa/TacoLento_project/issues"
@@ -19,5 +19,12 @@
   "homepage": "https://github.com/FrancescoPenasa/TacoLento_project#readme",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
   }
 }
