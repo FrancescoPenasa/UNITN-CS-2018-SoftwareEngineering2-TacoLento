@@ -3,8 +3,7 @@
 Progetto per il corso di Ingegneria del Software 2 - UNITN
 
 # Contributors
-Vedi il file Contributors.md
-Francesco Penasa
-Daniele Scalice
-Gabriele Berrera
-Andrea Zerbini
+- Francesco Penasa
+- Daniele Scalice
+- Gabriele Berrera
+- Andrea Zerbini
