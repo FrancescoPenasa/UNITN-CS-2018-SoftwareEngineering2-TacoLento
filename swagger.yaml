@@ -2,11 +2,7 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: "TacoLento_project"
-  description: Polls is a simple API allowing consumers to view polls and vote in them.
-  license:
-    name: MIT
-    url: https://github.com/apiaryio/polls-api/blob/master/LICENSE
-host: polls.apiblueprint.org
+  description: TacoLento_project Api
 basePath: /
 schemes:
 - http
@@ -15,106 +11,153 @@ consumes:
 produces:
 - application/json
 paths:
-  /questions:
+  /users:
+    x-summary: Path che si occupa degli users
+    post:
+      description: insert new user
+      summary: Create a New Question
+      responses:
+        201:
+          description: User insert
+        400: 
+          description: Invalid Input
+        404: 
+          description: An user whit the same email already exists
+          
+  #/user/{id}:
+  #  x-summary: Update, search or delete user 
+  #  parameters:
+  #    - name: id
+  #      in: path
+  #      description: User ID
+  #      required: true
+  #      schema:
+  #        type: integer
+  #  get:
+  #    description: Find user info
+  #    responses:
+  #      201: 
+  #        description: User info
+  #      400: 
+  #        description: Invalid input
+  #  put:
+  #    description: Update user info
+  #    responses:
+  #      201: 
+  #        description: User update
+  #      400: 
+  #        description: Invalid input
+  #  delete:
+  #    description: delete user
+  #    responses:
+  #      201: 
+  #        description: User deleted
+  #      400: 
+  #        description: Invalid input
+  
+  /tasks:
     x-summary: Questions Collection
     get:
       summary: List All Questions
+#      parameters:
+#        - in: query
+#          name: MC
+#          schema:
+#            type: string
+#            enum: [MC, OpenAnswer]
+#          required: false
       responses:
         200:
           description: Successful Response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Question'
-          examples:
-            application/json:
-              - question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 2048
-                  - choice: Python
-                    votes: 1024
-                  - choice: Objective-C
-                    votes: 512
-                  - choice: Ruby
-                    votes: 256
+        400: 
+          description: Invalid Input
     post:
-      description: >-
-        You may create your own question using this action. It takes a JSON
-        object containing a question and a collection of answers in the
-        form of choices.
+      description: New Question
       summary: Create a New Question
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/QuestionRequest'
       responses:
         201:
-          description: ''
-          schema:
-            $ref: '#/definitions/Question'
-          examples:
-            application/json:
-                question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 0
-                  - choice: Python
-                    votes: 0
-                  - choice: Objective-C
-                    votes: 0
-                  - choice: Ruby
-                    votes: 0
-definitions:
-  Question:
-    title: Question
-    type: object
-    properties:
-      question:
-        type: string
-      published_at:
-        type: string
-      choices:
-        type: array
-        items:
-          $ref: '#/definitions/Choice'
-    required:
-      - question
-      - published_at
-      - choices
-  Choice:
-    title: Choice
-    type: object
-    properties:
-      votes:
-        type: integer
-        format: int32
-      choice:
-        type: string
-    required:
-      - votes
-      - choice
-  QuestionRequest:
-    title: Question Request
-    type: object
-    properties:
-      question:
-        type: string
-      choices:
-        type: array
-        items:
-          type: string
-    required:
-      - question
-      - choices
-    example:
-      question: Favourite programming language?
-      choices:
-        - Swift
-        - Python
-        - Objective-C
-        - Ruby
+          description: Task insert 
+        400:
+          description: Invalid Input
+          
+#  /task/{id}:
+#    x-summary: Update, search or delete task
+#    parameters:
+#      - name: id
+#        in: path
+#        description: User ID
+#        required: true
+#        schema:
+#          type: integer
+#    get:
+#      description: Find task
+#      responses:
+#        201: 
+#          description: Task Find
+#        400: 
+#          description: Invalid input
+#    put:
+#      description: Update task
+#      responses:
+#        201: 
+#          description: task updated
+#        400: 
+#          description: Invalid input
+#    delete:
+#      description: delete task
+#      responses:
+#        201: 
+#          description: Task deleted
+#        400: 
+#          description: Invalid input
+          
+
+          
+  /exams:
+    x-summary: Exams Collection
+    get:
+      summary: List All exams
+      responses:
+        200:
+          description: Successful Response
+        400: 
+          description: Invalid Input
+    post:
+      description: New exams
+      summary: Create a New Exams
+      responses:
+        201:
+          description: Exams insert 
+        400:
+          description: Invalid Input
+
+#  /exam/{id}:
+#    x-summary: Update, search or delete exam 
+#    parameters:
+#      - name: id
+#        in: path
+#        description: exam ID
+#        required: true
+#        schema:
+#          type: integer
+#    get:
+#      description: Find exam
+#      responses:
+#        201: 
+#          description: Exam find
+#        400: 
+#          description: Invalid input
+#    put:
+#      description: Update Exam
+#     responses:
+#        201: 
+#          description: Exam updated
+#        400: 
+#          description: Invalid input
+#    delete:
+#      description: delete Exam
+#      responses:
+#        201: 
+#          description: Exam deleted
+#        400: 
+#          description: Invalid input
