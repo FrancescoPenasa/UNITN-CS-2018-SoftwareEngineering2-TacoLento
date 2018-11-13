@@ -24,47 +24,58 @@ paths:
         404: 
           description: An user whit the same email already exists
           
-  #/user/{id}:
-  #  x-summary: Update, search or delete user 
-  #  parameters:
-  #    - name: id
-  #      in: path
-  #      description: User ID
-  #      required: true
-  #      schema:
-  #        type: integer
-  #  get:
-  #    description: Find user info
-  #    responses:
-  #      201: 
-  #        description: User info
-  #      400: 
-  #        description: Invalid input
-  #  put:
-  #    description: Update user info
-  #    responses:
-  #      201: 
-  #        description: User update
-  #      400: 
-  #        description: Invalid input
-  #  delete:
-  #    description: delete user
-  #    responses:
-  #      201: 
-  #        description: User deleted
-  #      400: 
-  #        description: Invalid input
+#/users/{id}:
+#  x-summary: Update, search or delete user 
+#  get:
+#    description: Find user info
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
+#    responses:
+#      201: 
+#        description: User info
+#      400: 
+#        description: Invalid input
+#  put:
+#    description: Update user info
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
+#    responses:
+#      201: 
+#        description: User update
+#      400: 
+#        description: Invalid input
+#  delete:
+#    description: delete user
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
+#    responses:
+#      201: 
+#        description: User deleted
+#      400: 
+#        description: Invalid input
   
   /tasks:
     x-summary: Questions Collection
     get:
       summary: List All Questions
 #      parameters:
-#        - in: query
+#          in: query
 #          name: MC
 #          schema:
 #            type: string
-#            enum: [MC, OpenAnswer]
+#            enum: [MC,CC, OpenAnswer]
 #          required: false
       responses:
         200:
@@ -80,17 +91,16 @@ paths:
         400:
           description: Invalid Input
           
-#  /task/{id}:
+#  /tasks/{id}:
 #    x-summary: Update, search or delete task
-#    parameters:
-#      - name: id
-#        in: path
-#        description: User ID
-#        required: true
-#        schema:
-#          type: integer
 #    get:
 #      description: Find task
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
 #      responses:
 #        201: 
 #          description: Task Find
@@ -98,6 +108,12 @@ paths:
 #          description: Invalid input
 #    put:
 #      description: Update task
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
 #      responses:
 #        201: 
 #          description: task updated
@@ -105,6 +121,12 @@ paths:
 #          description: Invalid input
 #    delete:
 #      description: delete task
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
 #      responses:
 #        201: 
 #          description: Task deleted
@@ -131,17 +153,16 @@ paths:
         400:
           description: Invalid Input
 
-#  /exam/{id}:
+#  /exams/{id}:
 #    x-summary: Update, search or delete exam 
-#    parameters:
-#      - name: id
-#        in: path
-#        description: exam ID
-#        required: true
-#        schema:
-#          type: integer
 #    get:
 #      description: Find exam
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
 #      responses:
 #        201: 
 #          description: Exam find
@@ -149,13 +170,25 @@ paths:
 #          description: Invalid input
 #    put:
 #      description: Update Exam
-#     responses:
-#        201: 
-#          description: Exam updated
-#        400: 
-#          description: Invalid input
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
+#      responses:
+#         201: 
+#           description: Exam updated
+#         400: 
+#           description: Invalid input
 #    delete:
 #      description: delete Exam
+#      parameters:
+#        - name: id
+#          in: path
+#          description: exam ID
+#          required: true
+#          type:integer
 #      responses:
 #        201: 
 #          description: Exam deleted
