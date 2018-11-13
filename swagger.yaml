@@ -12,17 +12,17 @@ produces:
 - application/json
 paths:
   /users:
-    x-summary: Path che si occupa degli users
+    x-summary: Users Collection
     post:
-      description: insert new user
-      summary: Create a New Question
+      description: Insert new user
+      summary: Create a New User
       responses:
         201:
-          description: User insert
+          description: User Created
         400: 
           description: Invalid Input
         404: 
-          description: An user whit the same email already exists
+          description: An user whit this email was not found.
           
 #/users/{id}:
 #  x-summary: Update, search or delete user 
@@ -67,9 +67,9 @@ paths:
 #        description: Invalid input
   
   /tasks:
-    x-summary: Questions Collection
+    x-summary: Tasks Collection
     get:
-      summary: List All Questions
+      summary: List All Tasks
 #      parameters:
 #          in: query
 #          name: MC
@@ -83,11 +83,11 @@ paths:
         400: 
           description: Invalid Input
     post:
-      description: New Question
-      summary: Create a New Question
+      description: New Task
+      summary: Create a New Task
       responses:
         201:
-          description: Task insert 
+          description: Task created 
         400:
           description: Invalid Input
           
@@ -149,7 +149,7 @@ paths:
       summary: Create a New Exams
       responses:
         201:
-          description: Exams insert 
+          description: Exams created
         400:
           description: Invalid Input
 
