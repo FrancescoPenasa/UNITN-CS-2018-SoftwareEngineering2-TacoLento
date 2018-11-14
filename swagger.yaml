@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
   version: '1.0'
-  title: "TacoLento_project"
-  description: TacoLento_project Api
+  title: "TacoLento"
+  description: TacoLento is an API that allows it's users to create and manage exams and tasks.
 basePath: /
 schemes:
 - http
@@ -12,64 +12,67 @@ produces:
 - application/json
 paths:
   /users:
-    x-summary: Users Collection
+    x-summary: Users
     post:
       description: Insert new user
-      summary: Create a New User
       responses:
         201:
-          description: User Created
+          description: User created
         400: 
-          description: Invalid Input
-        404: 
-          description: An user whit this email was not found.
+          description: Invalid input
+        409: 
+          description: An user whit this email was already found.
           
-#/users/{id}:
-#  x-summary: Update, search or delete user 
-#  get:
-#    description: Find user info
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#    responses:
-#      201: 
-#        description: User info
-#      400: 
-#        description: Invalid input
-#  put:
-#    description: Update user info
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#    responses:
-#      201: 
-#        description: User update
-#      400: 
-#        description: Invalid input
-#  delete:
-#    description: delete user
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#    responses:
-#      201: 
-#        description: User deleted
-#      400: 
-#        description: Invalid input
+  /user/{id}:
+    x-summary: Update, search or delete a user
+    get:
+      description: Find user info
+      parameters:
+         - name: id
+           in: path
+           description: exam ID
+           required: true
+           type: integer
+      responses:
+       302: 
+         description: User found
+       400: 
+         description: Invalid input
+       404:
+         description: User not found
+    put:
+      description: Update user info
+      parameters:
+         - name: id
+           in: path
+           description: exam ID
+           required: true
+           type: integer
+      responses:
+       202: 
+         description: User updated
+       400: 
+         description: Invalid input
+       404: 
+         description: User not found
+    delete:
+      description: delete user
+      parameters:
+         - name: id
+           in: path
+           description: exam ID
+           required: true
+           type: integer
+      responses:
+       202: 
+         description: User deleted
+       404: 
+         description: User not found
   
   /tasks:
     x-summary: Tasks Collection
     get:
-      summary: List All Tasks
+      description: List All Tasks
 #      parameters:
 #          in: query
 #          name: MC
@@ -79,118 +82,121 @@ paths:
 #          required: false
       responses:
         200:
-          description: Successful Response
+          description: Successful response
         400: 
-          description: Invalid Input
+          description: Invalid input
     post:
       description: New Task
-      summary: Create a New Task
       responses:
         201:
           description: Task created 
         400:
-          description: Invalid Input
+          description: Invalid input
           
-#  /tasks/{id}:
-#    x-summary: Update, search or delete task
-#    get:
-#      description: Find task
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#      responses:
-#        201: 
-#          description: Task Find
-#        400: 
-#          description: Invalid input
-#    put:
-#      description: Update task
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#      responses:
-#        201: 
-#          description: task updated
-#        400: 
-#          description: Invalid input
-#    delete:
-#      description: delete task
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#      responses:
-#        201: 
-#          description: Task deleted
-#        400: 
-#          description: Invalid input
+  /task/{id}:
+    x-summary: Update, search or delete a task
+    get:
+      description: Find task
+      parameters:
+        - name: id
+          in: path
+          description: exam ID
+          required: true
+          type: integer
+      responses:
+        201: 
+          description: Task found
+        400: 
+          description: Invalid input
+        404:
+          description: Task not found
+    post:
+      description: Update task
+      parameters:
+        - name: id
+          in: path
+          description: exam ID
+          required: true
+          type: integer
+      responses:
+        201: 
+          description: Task updated
+        400: 
+          description: Invalid input
+        404:
+          description: Task not found
+    delete:
+      description: Delete task
+      parameters:
+        - name: id
+          in: path
+          description: exam ID
+          required: true
+          type: integer
+      responses:
+        201: 
+          description: Task deleted
+        404:
+          description: Task not found
           
 
           
   /exams:
     x-summary: Exams Collection
     get:
-      summary: List All exams
+      summary: List All Exams
       responses:
         200:
-          description: Successful Response
+          description: Successful response
         400: 
-          description: Invalid Input
+          description: Invalid input
     post:
       description: New exams
-      summary: Create a New Exams
+      summary: Create a New Exam
       responses:
         201:
           description: Exams created
         400:
-          description: Invalid Input
+          description: Invalid input
 
-#  /exams/{id}:
-#    x-summary: Update, search or delete exam 
-#    get:
-#      description: Find exam
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#      responses:
-#        201: 
-#          description: Exam find
-#        400: 
-#          description: Invalid input
-#    put:
-#      description: Update Exam
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#      responses:
-#         201: 
-#           description: Exam updated
-#         400: 
-#           description: Invalid input
-#    delete:
-#      description: delete Exam
-#      parameters:
-#        - name: id
-#          in: path
-#          description: exam ID
-#          required: true
-#          type:integer
-#      responses:
-#        201: 
-#          description: Exam deleted
-#        400: 
-#          description: Invalid input
+  /exams/{id}:
+    x-summary: Update, search or delete exam 
+    get:
+      description: Find exam
+      parameters:
+        - name: id
+          in: path
+          description: exam ID
+          required: true
+          type: integer
+      responses:
+        201: 
+          description: Exam find
+        400: 
+          description: Invalid input
+    post:
+      description: Update Exam
+      parameters:
+        - name: id
+          in: path
+          description: exam ID
+          required: true
+          type: integer
+      responses:
+         201: 
+           description: Exam updated
+         400: 
+           description: Invalid input
+    delete:
+      description: Delete Exam
+      parameters:
+        - name: id
+          in: path
+          description: exam ID
+          required: true
+          type: integer
+      responses:
+        201: 
+          description: Exam deleted
+        400: 
+          description: Invalid input
