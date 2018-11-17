@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/FrancescoPenasa/TacoLento_project#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "request": "^2.88.0"
   },
   "jest": {
     "verbose": true,
