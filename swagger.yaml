@@ -12,23 +12,101 @@ produces:
 - application/json
 paths:
   /users:
-    x-summary: Users
+    get:
+      tags:
+      - "users"
+      summary: Get all users
+      description: ""
+      produces:
+      - "application/json"
+      
+      responses:
+       200: 
+         description: OK
+       404:
+         description: Users not found
+      
     post:
-      description: Insert new user
+      tags:
+      - "users"
+      summary: Create user
+      description: ""
+      operationId: "addUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
       responses:
         201:
           description: User created
         400: 
           description: Invalid input
         409: 
-          description: An user whit this email was already found.
+          description: An user with this email was already found.
           
-  /user/{id}:
-    x-summary: Update, search or delete a user
+  /users/findByClass:
+    get:
+      tags:
+      - "users"
+      summary: "Finds users by class"
+      description: "Multiple class values can be provided with comma separated strings"
+      operationId: "findUserssByClass"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "class"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        400:
+          description: "Invalid status value"
+
+  /users/findByRole:
+    get:
+      tags:
+      - "users"
+      summary: "Finds Users by role"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findUsersByRole"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "role"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        400:
+          description: "Invalid status value"
+      
+  /users/{userId}:
+    #x-summary: Update, search or delete a user
     get:
       description: Find user info
       parameters:
-         - name: id
+         - name: userId
            in: path
            description: exam ID
            required: true
@@ -43,7 +121,7 @@ paths:
     put:
       description: Update user info
       parameters:
-         - name: id
+         - name: userId
            in: path
            description: exam ID
            required: true
@@ -58,7 +136,7 @@ paths:
     delete:
       description: delete user
       parameters:
-         - name: id
+         - name: userId
            in: path
            description: exam ID
            required: true
@@ -70,7 +148,7 @@ paths:
          description: User not found
   
   /tasks:
-    x-summary: Tasks Collection
+    #x-summary: Tasks Collection
     get:
       description: List All Tasks
 #      parameters:
@@ -85,6 +163,7 @@ paths:
           description: Successful response
         400: 
           description: Invalid input
+          
     post:
       description: New Task
       responses:
@@ -92,13 +171,16 @@ paths:
           description: Task created 
         400:
           description: Invalid input
+         
+  #/tasks/findBySubject        
+  #TODO 
           
-  /task/{id}:
-    x-summary: Update, search or delete a task
+  /tasks/{taskId}:
+    #x-summary: Update, search or delete a task
     get:
       description: Find task
       parameters:
-        - name: id
+        - name: taskId
           in: path
           description: exam ID
           required: true
@@ -113,7 +195,7 @@ paths:
     post:
       description: Update task
       parameters:
-        - name: id
+        - name: taskId
           in: path
           description: exam ID
           required: true
@@ -128,7 +210,7 @@ paths:
     delete:
       description: Delete task
       parameters:
-        - name: id
+        - name: taskId
           in: path
           description: exam ID
           required: true
@@ -138,11 +220,10 @@ paths:
           description: Task deleted
         404:
           description: Task not found
-          
-
+    
           
   /exams:
-    x-summary: Exams Collection
+    #x-summary: Exams Collection
     get:
       summary: List All Exams
       responses:
@@ -150,6 +231,7 @@ paths:
           description: Successful response
         400: 
           description: Invalid input
+    
     post:
       description: New exams
       summary: Create a New Exam
@@ -159,12 +241,12 @@ paths:
         400:
           description: Invalid input
 
-  /exams/{id}:
-    x-summary: Update, search or delete exam 
+  /exams/{examId}:
+    #x-summary: Update, search or delete exam 
     get:
       description: Find exam
       parameters:
-        - name: id
+        - name: examId
           in: path
           description: exam ID
           required: true
@@ -174,10 +256,10 @@ paths:
           description: Exam find
         400: 
           description: Invalid input
-    post:
+    put:
       description: Update Exam
       parameters:
-        - name: id
+        - name: examId
           in: path
           description: exam ID
           required: true
@@ -190,7 +272,7 @@ paths:
     delete:
       description: Delete Exam
       parameters:
-        - name: id
+        - name: examId
           in: path
           description: exam ID
           required: true
@@ -200,3 +282,260 @@ paths:
           description: Exam deleted
         400: 
           description: Invalid input
+          
+  /submissions/:
+    #x-summary: sub 
+    get:
+      tags:
+      - "submissions"
+      summary: Get all submissions
+      description: ""
+      produces:
+      - "application/json"
+      
+      responses:
+       200: 
+         description: OK
+       404:
+         description: Submissions not found
+      
+    post:
+      tags:
+      - "submission"
+      summary: Create review
+      description: ""
+      operationId: "addSubmission"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created submission object"
+        required: true
+        schema:
+          $ref: "#/definitions/Submission"
+      responses:
+        201:
+          description: Submission created
+        400: 
+          description: Invalid input
+
+    
+  #/submissions/findByExam:
+  #TODO
+    
+  /submissions/{subId}:
+  #  x-summary: Update, search or delete exam 
+    get:
+      description: Find Submission
+      parameters:
+        - name: subId
+          in: path
+          description: submission ID
+          required: true
+          type: integer
+      responses:
+        201: 
+          description: Submission find
+        400: 
+          description: Invalid input
+          
+    #questo potrebbe essere importante      
+    put:
+      description: Update Submission
+      parameters:
+        - name: subId
+          in: path
+          description: submission ID
+          required: true
+          type: integer
+      responses:
+         201: 
+           description: Submission updated
+         400: 
+           description: Invalid input
+           
+    delete:
+      description: Delete Exam
+      parameters:
+        - name: subId
+          in: path
+          description: submission ID
+          required: true
+          type: integer
+      responses:
+        200: 
+          description: Submission deleted
+        400: 
+          description: Invalid input
+
+  /reviews/:
+  #  x-summary: Update, search or delete exam 
+    get:
+      tags:
+      - "review"
+      summary: Get all reviews
+      description: ""
+      produces:
+      - "application/json"
+      
+      responses:
+       200: 
+         description: OK
+       404:
+         description: Reviews not found
+      
+    post:
+      tags:
+      - "review"
+      summary: Create review
+      description: ""
+      operationId: "addReview"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created review object"
+        required: true
+        schema:
+          $ref: "#/definitions/Review"
+      responses:
+        201:
+          description: Review created
+        400: 
+          description: Invalid input
+        
+  #/reviews/findByExam
+  #TODO
+  
+  #/reviews/findBySumbission
+  #TODO 
+  
+  /reviews/{reviewId}:
+  #  x-summary: Update, search or delete exam 
+    get:
+      description: Find review
+      parameters:
+        - name: reviewId
+          in: path
+          description: revied id
+          required: true
+          type: integer
+      responses:
+        200: 
+          description: Review find
+        400: 
+          description: Invalid input
+          
+#### questo potremmo cancellarlo          
+    put:
+      description: Update review
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          type: integer
+      responses:
+         201: 
+           description: Exam updated
+         400: 
+           description: Invalid input
+           
+# e anche questo           
+    delete:
+      description: Delete review
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          type: integer
+      responses:
+        201: 
+          description: Exam deleted
+        400: 
+          description: Invalid input
+
+#### fino a qui
+
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      role:
+        type: "string"
+        description: "AT, Teacher or Stundet"
+      class:
+        type: "string"
+        description: "name of the class attended or teached"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
+    xml:
+      name: "User"
+      
+# TO DO SUBMISSION BETTER      
+  Submission:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      role:
+        type: "string"
+        description: "AT, Teacher or Stundet"
+      class:
+        type: "string"
+        description: "name of the class attended or teached"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
+    xml:
+      name: "User"
+      
+# TO DO REVIEW BETTER      
+  Review:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      role:
+        type: "string"
+        description: "AT, Teacher or Stundet"
+      class:
+        type: "string"
+        description: "name of the class attended or teached"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
+    xml:
+      name: "User"
