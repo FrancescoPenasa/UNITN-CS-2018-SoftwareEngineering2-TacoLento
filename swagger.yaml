@@ -55,6 +55,8 @@ paths:
     #x-summary: Update, search or delete a user
     get:
       description: Find user info
+      tags:
+        - "users"
       parameters:
          - name: userId
            in: path
@@ -486,31 +488,47 @@ paths:
          400: 
            description: Invalid input
 
-#### fino a qui
-
 definitions:
   User:
     type: "object"
+    required:
+      - id
+      - name
+      - surname
+      - email
+      - password
     properties:
       id:
         type: "integer"
-        format: "int64"
-      username:
+        description: Unique user ID
+      name:
         type: "string"
-      firstName:
+        description: User Name
+      surname:
         type: "string"
-      lastName:
+        description: User surname
+      email:
         type: "string"
+        description: User email (for login)
+      password:
+        type: "string"
+        description: User password (for login)
       
-# TO DO SUBMISSION BETTER      
   Submission:
     type: "object"
+    required: 
+      - id
+      - date
+      - userId
+      - examId
+      - answers
     properties:
       id:
         type: "integer"
-        format: "int64"
+        description: Unique id submission
       date:
         type: "string"
+        description: submission date and hour
       userId:
         type: "integer"
         format: "int64"
@@ -519,29 +537,41 @@ definitions:
         format: "int64"
       answers:
         type: "array"
+        description: "all user answer" 
         items:
           type: "object"
           properties:
             idTask:
               type: "integer"
-              format: "int64"
+              description: Unique task ID 
             answer:
               type: "string"
-
+              description: answer for a specific taskId
       
-# TO DO REVIEW BETTER      
   Review:
+    required: 
+      - id
+      - userId
+      - submissionId
+      - result
+      - comments
     type: "object"
     properties:
       id:
         type: "integer"
         format: "int64"
+        description: Unique ID of this review 
       userId:
         type: "integer"
         format: "int64"
+        description: Unique user ID 
       submissionId:
         type: "integer"
         format: "int64"
+        description: Unique submission ID
+      result: 
+        type: boolean
+        description: Exam result  
       comments:
         type: "array"
         items:
@@ -550,20 +580,92 @@ definitions:
             idTask:
               type: "integer"
               format: "int64"
+              description: Unique task ID
             comment:
               type: "string"
+              description: comment to submitted task
       
-# TO DO TASK BETTER      
   Task:
     type: "object"
     properties:
       id:
         type: "integer"
         format: "int64"
+        description: Unique task ID
       taskType:
         type: "string"
+        enum:
+          - OP
+          - MC
+          - SC
+        description: >
+          - OP: Open question
+          - MC: Multiple Choice 
+          - SC: Single Choice 
       question:
         type: "string"
+        description: the question of this task
       subjectId:
         type: "integer"
         format: "int64"
+        
+  Exams:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        description: Unique exam ID
+      name: 
+        type: string
+        description: exam name
+        example: SE2_2018
+      date:
+        type: "array"
+        items:
+          type: "integer"
+          properties:
+            day:
+              type: "integer"
+              format: "int64"
+              description: start day
+              minimum: 1
+              maximum: 31
+            month:
+              type: "integer"
+              format: "int64"
+              description: start month
+              minimum: 1
+              maximum: 12
+            year:
+              type: "integer"
+              format: "int64"
+              description: start year
+              minimum: 2018
+      deadline:
+        type: "array"
+        items:
+          type: "integer"
+          properties:
+            day:
+              type: "integer"
+              format: "int64"
+              description: deadline day
+              minimum: 1
+              maximum: 31
+            month:
+              type: "integer"
+              format: "int64"
+              description: deadline month
+              minimum: 1
+              maximum: 12
+            year:
+              type: "integer"
+              format: "int64"
+              description: deadline year
+              minimum: 2018
+      Question_N: 
+        type: integer
+        description: number of question
+        minimum: 1
+        maximum: 20
