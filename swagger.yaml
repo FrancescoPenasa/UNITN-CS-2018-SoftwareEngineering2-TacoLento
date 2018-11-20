@@ -15,8 +15,8 @@ paths:
     get:
       tags:
       - "users"
-      summary: Get all users
-      description: ""
+      #summary: Get all users
+      description: "Get all users"
       produces:
       - "application/json"
       
@@ -29,8 +29,8 @@ paths:
     post:
       tags:
       - "users"
-      summary: Create user
-      description: ""
+      #summary: Create user
+      description: "Create user"
       operationId: "addUser"
       consumes:
       - "application/json"
@@ -117,7 +117,7 @@ paths:
           description: Invalid input
           
     post:
-      description: New Task
+      description: Create Task
       responses:
         201:
           description: Task created 
@@ -128,8 +128,8 @@ paths:
     get:
       tags:
       - "tasks"
-      summary: "Finds Task by subject"
-      description: "Multiple status values can be provided with comma separated strings"
+      #summary: "Finds Task by subject"
+      description: "Finds Task by subject. Multiple status values can be provided with comma separated strings"
       operationId: "findTasksBySubject"
       produces:
       - "application/json"
@@ -166,7 +166,7 @@ paths:
           description: Invalid input
         404:
           description: Task not found
-    post:
+    put:
       description: Update task
       parameters:
         - name: taskId
@@ -199,7 +199,10 @@ paths:
   /exams:
     #x-summary: Exams Collection
     get:
-      summary: List All Exams
+      tags: 
+      - "exams"
+      #summary: List All Exams
+      description: "List All Exams"
       responses:
         200:
           description: Successful response
@@ -207,8 +210,8 @@ paths:
           description: Invalid input
     
     post:
-      description: New exams
-      summary: Create a New Exam
+      description: Create exam
+      #summary: Create a New Exam
       responses:
         201:
           description: Exams created
@@ -218,6 +221,8 @@ paths:
   /exams/{examId}:
     #x-summary: Update, search or delete exam 
     get:
+      tags: 
+      - "exams"
       description: Find exam
       parameters:
         - name: examId
@@ -230,6 +235,8 @@ paths:
           description: Exam find
         400: 
           description: Invalid input
+        404: 
+          description: Exam doesn't exist.
     put:
       description: Update Exam
       parameters:
@@ -243,6 +250,8 @@ paths:
            description: Exam updated
          400: 
            description: Invalid input
+         404: 
+          description: Exam doesn't exist.
     delete:
       description: Delete Exam
       parameters:
@@ -256,14 +265,16 @@ paths:
           description: Exam deleted
         400: 
           description: Invalid input
+        404: 
+          description: Exam doesn't exist.
           
   /submissions/:
     #x-summary: sub 
     get:
       tags:
       - "submissions"
-      summary: Get all submissions
-      description: ""
+      #summary: Get all submissions
+      description: "Get all submissions"
       produces:
       - "application/json"
       
@@ -276,8 +287,8 @@ paths:
     post:
       tags:
       - "submission"
-      summary: Create review
-      description: ""
+      #summary: Create submission
+      description: "Create submission"
       operationId: "addSubmission"
       consumes:
       - "application/json"
@@ -301,8 +312,8 @@ paths:
     get:
       tags:
       - "submissions"
-      summary: "Finds Submission by Exam"
-      description: "Multiple status values can be provided with comma separated strings"
+      #summary: "Finds Submission by Exam"
+      description: "Finds Submission by Exam. Multiple status values can be provided with comma separated strings"
       operationId: "findSubmissionsByExam"
       produces:
       - "application/json"
@@ -337,6 +348,8 @@ paths:
           description: Submission find
         400: 
           description: Invalid input
+        404: 
+          description: Submission not found.
           
     #questo potrebbe essere importante      
     put:
@@ -352,9 +365,11 @@ paths:
            description: Submission updated
          400: 
            description: Invalid input
+         404: 
+           description: Submission not found.
            
     delete:
-      description: Delete Exam
+      description: Delete Submission
       parameters:
         - name: subId
           in: path
@@ -366,14 +381,16 @@ paths:
           description: Submission deleted
         400: 
           description: Invalid input
+        404: 
+          description: Submission doesn't exist.
 
   /reviews/:
   #  x-summary: Update, search or delete exam 
     get:
       tags:
       - "review"
-      summary: Get all reviews
-      description: ""
+      #summary: Get all reviews
+      description: "Get all reviews"
       produces:
       - "application/json"
       
@@ -386,8 +403,8 @@ paths:
     post:
       tags:
       - "review"
-      summary: Create review
-      description: ""
+      #summary: Create review
+      description: "Create review"
       operationId: "addReview"
       consumes:
       - "application/json"
@@ -412,7 +429,7 @@ paths:
     get:
       tags:
       - "reviews"
-      summary: "Finds Reviews by Exam"
+      #summary: "Finds Reviews by Exam"
       description: "Multiple status values can be provided with comma separated strings"
       operationId: "findReviewsByExam"
       produces:
@@ -438,8 +455,8 @@ paths:
     get:
       tags:
       - "reviews"
-      summary: "Finds Reviews by Submission"
-      description: "Multiple status values can be provided with comma separated strings"
+      #summary: "Finds Reviews by Submission"
+      description: "Finds Reviews by Submission. Multiple status values can be provided with comma separated strings"
       operationId: "findReviewsBySubmission"
       produces:
       - "application/json"
@@ -462,6 +479,8 @@ paths:
   /reviews/{reviewId}:
   #  x-summary: Update, search or delete exam 
     get:
+      tags:
+      - "reviews"
       description: Find review
       parameters:
         - name: reviewId
@@ -474,6 +493,8 @@ paths:
           description: Review find
         400: 
           description: Invalid input
+        404: 
+          description: Review not found.
 
     put:
       description: Update review
@@ -487,6 +508,8 @@ paths:
            description: Exam updated
          400: 
            description: Invalid input
+         404: 
+            description: Review not found.
 
 definitions:
   User:
