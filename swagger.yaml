@@ -50,56 +50,6 @@ paths:
           description: Invalid input
         409: 
           description: An user with this email was already found.
-          
-  /users/findByClass:
-    get:
-      tags:
-      - "users"
-      summary: "Finds users by class"
-      description: "Multiple class values can be provided with comma separated strings"
-      operationId: "findUserssByClass"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "class"
-        in: "query"
-        description: "Status values that need to be considered for filter"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/User"
-        400:
-          description: "Invalid status value"
-
-  /users/findByRole:
-    get:
-      tags:
-      - "users"
-      summary: "Finds Users by role"
-      description: "Multiple status values can be provided with comma separated strings"
-      operationId: "findUsersByRole"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "role"
-        in: "query"
-        description: "Status values that need to be considered for filter"
-        required: true
-        type: "string"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/User"
-        400:
-          description: "Invalid status value"
       
   /users/{userId}:
     #x-summary: Update, search or delete a user
@@ -172,8 +122,30 @@ paths:
         400:
           description: Invalid input
          
-  #/tasks/findBySubject        
-  #TODO 
+  /tasks/findBySubject:
+    get:
+      tags:
+      - "tasks"
+      summary: "Finds Task by subject"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findTasksBySubject"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "subject"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Task"
+        400:
+          description: "Invalid status value"
           
   /tasks/{taskId}:
     #x-summary: Update, search or delete a task
@@ -322,9 +294,31 @@ paths:
         400: 
           description: Invalid input
 
-    
-  #/submissions/findByExam:
-  #TODO
+  
+  /submissions/findByExam:
+    get:
+      tags:
+      - "submissions"
+      summary: "Finds Submission by Exam"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findSubmissionsByExam"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "exam"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Submission"
+        400:
+          description: "Invalid status value"
     
   /submissions/{subId}:
   #  x-summary: Update, search or delete exam 
@@ -410,11 +404,58 @@ paths:
         400: 
           description: Invalid input
         
-  #/reviews/findByExam
-  #TODO
+ 
+  #FORSE QUESTO NO
+  /reviews/findByExam:
+    get:
+      tags:
+      - "reviews"
+      summary: "Finds Reviews by Exam"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findReviewsByExam"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "exam"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Review"
+        400:
+          description: "Invalid status value"
   
-  #/reviews/findBySumbission
-  #TODO 
+ 
+  /reviews/findBySubmission:
+    get:
+      tags:
+      - "reviews"
+      summary: "Finds Reviews by Submission"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findReviewsBySubmission"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "Submission"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Review"
+        400:
+          description: "Invalid status value"
   
   /reviews/{reviewId}:
   #  x-summary: Update, search or delete exam 
@@ -475,18 +516,6 @@ definitions:
         type: "string"
       lastName:
         type: "string"
-      role:
-        type: "string"
-        description: "AT, Teacher or Stundet"
-      class:
-        type: "string"
-        description: "name of the class attended or teached"
-      userStatus:
-        type: "integer"
-        format: "int32"
-        description: "User Status"
-    xml:
-      name: "User"
       
 # TO DO SUBMISSION BETTER      
   Submission:
@@ -495,24 +524,25 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-      username:
+      date:
         type: "string"
-      firstName:
-        type: "string"
-      lastName:
-        type: "string"
-      role:
-        type: "string"
-        description: "AT, Teacher or Stundet"
-      class:
-        type: "string"
-        description: "name of the class attended or teached"
-      userStatus:
+      userId:
         type: "integer"
-        format: "int32"
-        description: "User Status"
-    xml:
-      name: "User"
+        format: "int64"
+      examId:
+        type: "integer"
+        format: "int64"
+      answers:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            idTask:
+              type: "integer"
+              format: "int64"
+            answer:
+              type: "string"
+
       
 # TO DO REVIEW BETTER      
   Review:
@@ -521,21 +551,34 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-      username:
-        type: "string"
-      firstName:
-        type: "string"
-      lastName:
-        type: "string"
-      role:
-        type: "string"
-        description: "AT, Teacher or Stundet"
-      class:
-        type: "string"
-        description: "name of the class attended or teached"
-      userStatus:
+      userId:
         type: "integer"
-        format: "int32"
-        description: "User Status"
-    xml:
-      name: "User"
+        format: "int64"
+      submissionId:
+        type: "integer"
+        format: "int64"
+      comments:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            idTask:
+              type: "integer"
+              format: "int64"
+            comment:
+              type: "string"
+      
+# TO DO TASK BETTER      
+  Task:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      taskType:
+        type: "string"
+      question:
+        type: "string"
+      subjectId:
+        type: "integer"
+        format: "int64"
