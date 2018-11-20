@@ -472,8 +472,7 @@ paths:
           description: Review find
         400: 
           description: Invalid input
-          
-#### questo potremmo cancellarlo          
+
     put:
       description: Update review
       parameters:
@@ -486,20 +485,6 @@ paths:
            description: Exam updated
          400: 
            description: Invalid input
-           
-# e anche questo           
-    delete:
-      description: Delete review
-      parameters:
-        - name: reviewId
-          in: path
-          required: true
-          type: integer
-      responses:
-        201: 
-          description: Exam deleted
-        400: 
-          description: Invalid input
 
 #### fino a qui
 
