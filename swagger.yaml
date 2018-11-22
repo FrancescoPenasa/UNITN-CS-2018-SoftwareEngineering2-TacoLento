@@ -102,6 +102,8 @@ paths:
   /tasks:
     #x-summary: Tasks Collection
     get:
+      tags:
+      - "tasks"
       description: List All Tasks
 #      parameters:
 #          in: query
