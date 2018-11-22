@@ -388,7 +388,7 @@ paths:
   #  x-summary: Update, search or delete exam 
     get:
       tags:
-      - "review"
+      - "reviews"
       #summary: Get all reviews
       description: "Get all reviews"
       produces:
@@ -402,7 +402,7 @@ paths:
       
     post:
       tags:
-      - "review"
+      - "reviews"
       #summary: Create review
       description: "Create review"
       operationId: "addReview"
