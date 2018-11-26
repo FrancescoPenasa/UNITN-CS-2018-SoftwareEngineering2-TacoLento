@@ -3,7 +3,7 @@ const submissionsId = require(' ./submissions/subid');
 test('get /submissions/subid' , () => {
 	const response = await request(server).get('/submissions/123');
 	expect (response.status).toEqual(201);
-	expect (response.text).toContain([{id: 123, date: '23 novembre 2018, userId: 321, examId: 1, answer: 
+	expect (response.text).toContain([{id: 123, date: '23 novembre 2018', userId: 321, examId: 1, answer: 
 [idTask: 1, answer: 'test']}]);
 }:
 
