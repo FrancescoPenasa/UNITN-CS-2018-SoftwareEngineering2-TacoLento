@@ -1,5 +1,7 @@
 const request = require('supertest');
-const server = require('./app');
+const server = require('./app').app;
+const fetch = require("node-fetch");
+const url = 'http://localhost:3001/exams';
 /*
 const submissionsId = require(' ./submissions/subid');
 const examId = require('./exams/examid');
@@ -8,41 +10,54 @@ const examId = require('./exams/examid');
 //const exam = require('./exams');
 
 //EXAMS
-test('get /exams/examid with id 123', () => {
-	const response = request(server).get('/exams/0');
-	expect (response.status).toEqual(200);
-	expect (response.text).toContain([{id: 123, name: "esame se2", date: '27/11/2018', deadline: '28/11/2018 18:30', questions_N: 10}]);
+test('get /exams status check', async () => {
+	const response = await request(server).get('/exams');
+	expect(response.status).toEqual(200);
+	//expect(response.text).toContain([{id: 0, name: "esame se2", date: '27/11/2018', deadline: '28/11/2018 18:30', questions_N: 10},{id: 1, name: "esame web", date: '30/11/2018', deadline: '25/12/2018 18:30', questions_N: 2}]);
 });
 
-test('get /exams/examid with id abc', () => {
-	const response = request(server).get('/exams/abc');
+
+test('get /exams/0 json check', async () => {
+	return fetch(url)
+		.then(r => r.json())
+		.then(data => {
+			expect(data[0]).toEqual({
+				"id" : 0,
+				"name" : "esame se2",
+				"date" : "27/11/2018",
+				"deadline" : "28/11/2018 18:30",
+				questions_N : 10
+			})
+		})
+});
+
+test('get /exams/0 status check', async () => {
+	const response = await request(server).get('/exams/0');
+	expect(response.status).toEqual(200);
+	//expect(response.data).toEqual({id: 123, name: "esame se2", date: '27/11/2018', deadline: '28/11/2018 18:30', questions_N: 10});
+});
+
+test('get /exams/examid with id abc', async () => {
+	const response = await request(server).get('/exams/abc');
 	expect(response.status).toEqual(400);
 });
 
-test('get /exams/examid with id 456', () => {
-	const response = request(server).get('/exams/456');
+test('get /exams/examid with id 456', async () => {
+	const response = await request(server).get('/exams/456');
 	expect(response.status).toEqual(400);
 });
 
-test('post /exams/examid with id 789', () => {
-	const response = request(server).post('/submissions/789');
-	expect(response.status).toEqual(201);
-});
-
-test('post /exams/examid with id abc', () => {
-	const response = request(server).post('/submissions/abc');
+test('post /exams/examid with questions_N NaN', async () => {
+	const response = await request(server).post(
+		'/exams',
+		{ json: {name: 'Analisi 1', date: '27/11/2018', deadline: '28/11/2018 19:00', questions_N: "abc"} },
+		function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				console.log(body)
+			}
+		}
+	)
 	expect(response.status).toEqual(400);
-});
-
-test('post /exams/examid with id 123', () => {
-	const response = request(server).post('/submissions/123');
-	expect(response.status).toEqual(404);
-});
-
-test('get /exams', () => {
-	const response = request(server).get('/exams');
-	expect (response.status).toEqual(200);
-	expect (response.text).toContain([{id: 0, name: "esame se2", date: '27/11/2018', deadline: '28/11/2018 18:30', questions_N: 10},{id: 1, name: "esame web", date: '30/11/2018', deadline: '25/12/2018 18:30', questions_N: 2}]);
 });
 
 /*

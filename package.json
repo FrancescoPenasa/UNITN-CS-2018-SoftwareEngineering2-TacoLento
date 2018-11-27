@@ -20,7 +20,9 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "request": "^2.88.0"
+    "node-fetch": "^2.3.0",
+    "request": "^2.88.0",
+    "supertest": "^3.3.0"
   },
   "jest": {
     "verbose": true,

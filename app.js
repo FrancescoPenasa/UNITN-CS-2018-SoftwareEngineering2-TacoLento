@@ -3,14 +3,12 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 //app.use('/', express.static('public'));
 
 app.get('/', (req, res) => res.send('Hello World!'));
-
-app.listen(PORT, () => console.log('Example app listening on port '+ PORT));
 
 /**
  * User structure
@@ -51,9 +49,14 @@ app.get('/exams/', function (req,res){
 
 app.get('/exams/:id', function (req,res){
   var id = req.params.id;
-  
-  res.status(200);
-  res.send(exams[id]);
+
+  if(id > exams.length || isNaN(id)){
+    res.status(400);
+    res.send();
+  }else{
+    res.status(200);
+    res.send(exams[id]);
+  }
 });
 
 app.post('/exams/', function (req, res) {
@@ -64,11 +67,16 @@ app.post('/exams/', function (req, res) {
   exam.deadline = req.body.deadline;
   exam.questions_N = req.body.questions_N;
 
-  exams.push(exam);
-  
-  res.location("/exams/" + exams.id); //resource at
-  res.status(201);   //created
-  res.send();
+  if(isNaN(exam.questions_N)){
+    res.status(400);
+    res.send("a");
+  }else{
+    exams.push(exam);
+    
+    res.location("/exams/" + exams.id); //resource at
+    res.status(201);   //created
+    res.send();
+  }
 });
 
 /**
@@ -94,3 +102,7 @@ app.post('/users/', function (req, res) {
   res.status(201);   //created
   res.send();
 });
+
+module.exports = {app};
+
+app.listen(PORT, () => console.log('Example app listening on port '+ PORT));
