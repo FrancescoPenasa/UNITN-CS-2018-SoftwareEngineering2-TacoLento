@@ -12,45 +12,85 @@ app.get('/', (req, res) => res.send('Hello World!'));
 
 app.listen(PORT, () => console.log('Example app listening on port '+ PORT));
 
-
 /**
  * User structure
  */
 var users = [{
-    id : 1,
-    name : "Daniele Birbone",
-    description : "class 1 - class 2 - class 3",
-    type : "AT"
-  },{
-    id : 2,
-    name : "Giorgio Birba",
-    description : "class 1",
-    type : "Student"
-  }];
-  
-  
-  
-  /**
-   * GET ALL USERS
-   */
-  app.get('/users/', function (req, res) {
-    res.status(200);
-    res.send(users);
-  });
-  
+  id : 1,
+  name : "Daniele Birbone",
+  description : "class 1 - class 2 - class 3",
+  type : "AT"
+},{
+  id : 2,
+  name : "Giorgio Birba",
+  description : "class 1",
+  type : "Student"
+}];
 
-  /**
-   * CREATE
-   */
-  app.post('/users/', function (req, res) {
-    var user = req.body;
-    user.id = users.length + 1;
-    user.name = req.body.name
-    user.description = req.body.description
-    user.type = req.body.type
-    users.push(user);
-    
-    res.location("/users/" + users.id); //resource at
-    res.status(201);   //created
-    res.send();
-  });
+/**
+ * Exam structure
+ */
+var exams = [{
+  id: 0,
+  name: "esame se2",
+  date: '27/11/2018',
+  deadline: '28/11/2018 18:30',
+  questions_N: 10
+},{
+  id: 1,
+  name: "esame web",
+  date: '30/11/2018',
+  deadline: '25/12/2018 18:30',
+  questions_N: 2
+}];
+
+app.get('/exams/', function (req,res){
+  res.status(200);
+  res.send(exams);
+});
+
+app.get('/exams/:id', function (req,res){
+  var id = req.params.id;
+  
+  res.status(200);
+  res.send(exams[id]);
+});
+
+app.post('/exams/', function (req, res) {
+  var exam = req.body;
+  exam.id = exams.length + 1;
+  exam.name = req.body.name;
+  exam.date = req.body.date;
+  exam.deadline = req.body.deadline;
+  exam.questions_N = req.body.questions_N;
+
+  exams.push(exam);
+  
+  res.location("/exams/" + exams.id); //resource at
+  res.status(201);   //created
+  res.send();
+});
+
+/**
+ * GET ALL USERS
+ */
+app.get('/users/', function (req, res) {
+  res.status(200);
+  res.send(users);
+});
+
+/**
+ * CREATE
+ */
+app.post('/users/', function (req, res) {
+  var user = req.body;
+  user.id = users.length + 1;
+  user.name = req.body.name
+  user.description = req.body.description
+  user.type = req.body.type
+  users.push(user);
+  
+  res.location("/users/" + users.id); //resource at
+  res.status(201);   //created
+  res.send();
+});
