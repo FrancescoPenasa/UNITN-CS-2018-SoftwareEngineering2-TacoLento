@@ -111,18 +111,18 @@ test('put /submissions/subid', () => {
 });
 
 test('delete /submission/subid', () => {
-const response = request(server).delete('/submissions/1');
-expect(response.status).toEqual(201);
+	const response = request(server).delete('/submissions/1');
+	expect(response.status).toEqual(201);
 });
 
 test('delete /submission/subid', () => {
-const response = request(server).delete('/submissions/abc');
-expect(response.status).toEqual(400);
+	const response = request(server).delete('/submissions/abc');
+	expect(response.status).toEqual(400);
 });
 
 test('delete /submissions/subid', () => {
-const response = request(server).delete('/submissions/456');
-expect(response.status).toEqual(404);
+	const response = request(server).delete('/submissions/456');
+	expect(response.status).toEqual(404);
 });
 
 //const submissions = require(' ./submissions');
