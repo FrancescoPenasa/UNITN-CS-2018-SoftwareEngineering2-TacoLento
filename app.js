@@ -46,15 +46,15 @@ var exams = [{
  * Submission structure
  */
 var submissions = [{
-  id : 123,
+  id : 1,
   date : "27/11/2018",
-  userId : 321,
+  userId : 1,
   examId : 1,
   answer: [1,"test"]
 },{
-  id : 123,
+  id : 2,
   date : "28/11/2018",
-  userId : 222,
+  userId : 2,
   examId : 1,
   answer: [1,"test"]
 }];
