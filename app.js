@@ -11,21 +11,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.get('/', (req, res) => res.send('Hello World!'));
 
 /**
- * User structure
- */
-var users = [{
-  id : 1,
-  name : "Daniele Birbone",
-  description : "class 1 - class 2 - class 3",
-  type : "AT"
-},{
-  id : 2,
-  name : "Giorgio Birba",
-  description : "class 1",
-  type : "Student"
-}];
-
-/**
  * Exam structure
  */
 var exams = [{
@@ -97,28 +82,11 @@ app.post('/exams/', function (req, res) {
 });
 
 /**
- * GET ALL USERS
+ * USERS
  */
-app.get('/users/', function (req, res) {
-  res.status(200);
-  res.send(users);
-});
+var users_app = require('./users');
+users_app.set(app);
 
-/**
- * CREATE
- */
-app.post('/users/', function (req, res) {
-  var user = req.body;
-  user.id = users.length + 1;
-  user.name = req.body.name
-  user.description = req.body.description
-  user.type = req.body.type
-  users.push(user);
-  
-  res.location("/users/" + users.id); //resource at
-  res.status(201);   //created
-  res.send();
-});
 
 /**
  * /SUBMISSIONS
