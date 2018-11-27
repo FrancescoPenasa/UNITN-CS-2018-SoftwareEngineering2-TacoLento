@@ -630,9 +630,8 @@ definitions:
       question:
         type: "string"
         description: the question of this task
-      subjectId:
-        type: "integer"
-        format: "int64"
+      subject:
+        type: "string"
         
   Exams:
     type: "object"
