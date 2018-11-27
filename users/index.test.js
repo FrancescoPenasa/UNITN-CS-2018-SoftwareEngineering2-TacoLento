@@ -30,9 +30,9 @@ test('GET / should return 200', async () => {
 //   return fetch(url, {
 //     method: 'POST',
 //     body: JSON.stringify({
-//       "name": 'Test', 
-//       "surname": "Test", 
-//       "email" : "Test@email.com", 
+//       "name": 'Test',
+//       "surname": "Test",
+//       "email" : "Test@email.com",
 //       "password" : "password"}),
 //     headers: {
 //     'Content-Type': 'application/json',}
@@ -48,13 +48,13 @@ test('POST /users/ should return 201', () => {
   return fetch(url, {
     method: 'POST',
         body: JSON.stringify({
-          "name": 'Nome', 
-          "surname": "Cognome", 
-          "email" : "email@email.com", 
+          "name": 'Nome',
+          "surname": "Cognome",
+          "email" : "email@email.com",
           "password" : "password"}),
         headers: {
         'Content-Type': 'application/json',
-        },      
+        },
       })
       .then(r => expect(r.status).toEqual(201));
 });
@@ -64,12 +64,12 @@ test('POST /users/ should return 400', () => {
     method: 'POST',
         body: JSON.stringify({
           "name":"",
-          "surname": "", 
-          "email" : "email@email.com", 
+          "surname": "",
+          "email" : "email@email.com",
           "password" : "1"}),
         headers: {
         'Content-Type': 'application/json',
-        },      
+        },
       })
       .then(r => expect(r.status).toEqual(400))
 });
@@ -79,26 +79,26 @@ test('POST /users/ should return 409', () => {
   fetch(url, {
     method: 'POST',
         body: JSON.stringify({
-          "name": 'Nome', 
-          "surname": "Cognome", 
-          "email" : "email@email.com", 
+          "name": 'Nome',
+          "surname": "Cognome",
+          "email" : "email@email.com",
           "password" : "password"}),
         headers: {
         'Content-Type': 'application/json',
-        },      
+        },
       }).then(r => expect(r.status).toEqual(201))
-      
+
 
     fetch(url,{
       method: 'POST',
           body: JSON.stringify({
-            "name": 'Pippo', 
-            "surname": "Topolino", 
-            "email" : "email@email.com", 
+            "name": 'Pippo',
+            "surname": "Topolino",
+            "email" : "email@email.com",
             "password" : "paperino"}),
           headers: {
           'Content-Type': 'application/json',
-          },      
+          },
         })
 
       .then(r => expect(r.text).toEqual("email already exists"))

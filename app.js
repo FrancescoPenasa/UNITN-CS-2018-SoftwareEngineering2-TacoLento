@@ -74,7 +74,7 @@ app.post('/exams/', function (req, res) {
     res.send("a");
   }else{
     exams.push(exam);
-    
+
     res.location("/exams/" + exams.id); //resource at
     res.status(201);   //created
     res.send();
@@ -86,6 +86,12 @@ app.post('/exams/', function (req, res) {
  */
 var users_app = require('./users');
 users_app.set(app);
+
+/**
+ * TASKS
+ */
+var tasks_app = require('./tasks');
+tasks_app.set(app);
 
 
 /**
