@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 //app.use('/', express.static('public'));
@@ -40,6 +40,23 @@ var exams = [{
   date: '30/11/2018',
   deadline: '25/12/2018 18:30',
   questions_N: 2
+}];
+
+/**
+ * Submission structure
+ */
+var submissions = [{
+  id : 123,
+  date : "27/11/2018",
+  userId : 321,
+  examId : 1,
+  answer: [1,"test"]
+},{
+  id : 123,
+  date : "28/11/2018",
+  userId : 222,
+  examId : 1,
+  answer: [1,"test"]
 }];
 
 app.get('/exams/', function (req,res){
@@ -100,6 +117,27 @@ app.post('/users/', function (req, res) {
   
   res.location("/users/" + users.id); //resource at
   res.status(201);   //created
+  res.send();
+});
+
+/**
+ * /SUBMISSIONS
+ */
+app.get('/submissions/', function (req, res) {
+  res.status(200);
+  res.send(submissions);
+});
+
+app.post('/submissions/', function (req, res) {
+  var submission = req.body;
+  submission.id = submissions.lenght + 1;
+  submission.date = req.body.date;
+  submission.userId = req.body.userId;
+  submission.examId = req.body.examId;
+  submission.answers = [req.body.idTask , req.body.answer];
+  submissions.push(submission);
+  res.location("/submissions/" + submissions.id);
+  res.status(201);
   res.send();
 });
 
