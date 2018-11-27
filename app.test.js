@@ -68,10 +68,21 @@ test('put /exams', () => {
 });
 */
 //SUBMISSIONS
-test('get /submissions/subid', () => {
-	const response = request(server).get('/submissions/123');
+test('get /submissions/', () => {
+	const response = request(server).get('/submissions/');
 	expect (response.status).toEqual(201);
-	expect (response.text).toContain([{id: 123, date: '23 novembre 2018', userId: 321, examId: 1, answer: [{idTask: 1, answer: 'test'}]}]);
+	expect (response.text).toContain([{id: 1, date: '23 novembre 2018', userId: 1, examId: 1, answer: [{idTask: 1, answer: 'test'}]}]);
+});
+
+test('post /submissions/', () => {
+	const response = request(server).post('/submissions/');
+	expect (response.status).toEqual(201);
+});
+
+test('get /submissions/subid', () => {
+	const response = request(server).get('/submissions/1');
+	expect (response.status).toEqual(201);
+	expect (response.text).toContain([{id: 1, date: '23 novembre 2018', userId: 1, examId: 1, answer: [{idTask: 1, answer: 'test'}]}]);
 });
 
 test('get /submissions/subid', () => {
@@ -85,7 +96,7 @@ test('get /submission/subid', () => {
 });
 
 test('put /submission/subid', () => {
-	const response = request(server).put('/submissions/123');
+	const response = request(server).put('/submissions/1');
 	expect(response.status).toEqual(201);
 });
 
@@ -100,7 +111,7 @@ test('put /submissions/subid', () => {
 });
 
 test('delete /submission/subid', () => {
-const response = request(server).delete('/submissions/123');
+const response = request(server).delete('/submissions/1');
 expect(response.status).toEqual(201);
 });
 
