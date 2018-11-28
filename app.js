@@ -18,13 +18,15 @@ var exams = [{
   name: "esame se2",
   date: '27/11/2018',
   deadline: '28/11/2018 18:30',
-  questions_N: 10
+  questions_N: 10,
+  tasklist: [1,2,3,4,5,6,7,8,9,10]
 },{
   id: 1,
   name: "esame web",
   date: '30/11/2018',
   deadline: '25/12/2018 18:30',
-  questions_N: 2
+  questions_N: 2,
+  tasklist: [12,13]
 }];
 
 /**
