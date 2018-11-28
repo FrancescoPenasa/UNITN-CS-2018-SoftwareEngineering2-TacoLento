@@ -49,19 +49,23 @@ app.post('/submissions/', function (req, res) {
   
   if(submissions.date == "")
   {
-    res.send(400);
+    res.status(400);
+    error = 1;
   }
   if(submissions.userId == null)
   {
-    res.send(400);
+    res.status(400);
+    error = 1;
   }
   if(submissions.examId == null)
   {
-    res.send(400);
+    res.status(400);
+    error = 1;
   }
   if(submissions.answer.idTask == null)
   {
-    res.send(400);
+    res.status(400);
+    error = 1;
   }
  
   if (error != 0) 
