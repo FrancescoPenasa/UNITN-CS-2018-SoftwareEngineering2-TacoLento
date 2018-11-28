@@ -693,3 +693,9 @@ definitions:
         description: number of question
         minimum: 1
         maximum: 20
+      TaskList:
+        type: array
+        items:
+          type: integer
+        minItems: 1
+        maxItems: 20
