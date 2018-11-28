@@ -9,9 +9,19 @@ test('get /submissions/', () => {
 	expect (response.text).toContain([{id: 1, date: '23 novembre 2018', userId: 1, examId: 1, answer: [{idTask: 1, answer: 'test'}]}]);
 });
 
-test('post /submissions/', () => {
-	const response = request(app).post('/submissions/');
-	expect (response.status).toEqual(201);
+test('post /submissions/ return 201', () => {
+	return fetch(url, {
+		method: 'post',
+			body: JSON.stringify({
+				"date": "27/10/2018",
+				"userId": 1,
+				"examId": 1,
+				"answer": [1,"test"]}),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+	})
+	.then(r => expect(r.status).toEqual(201));
 });
 
 test('get /submissions/subid', () => {
