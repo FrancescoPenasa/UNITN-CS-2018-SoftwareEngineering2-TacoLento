@@ -1,19 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const exams = express.Router();
 
-const app = express();
+exams.use(bodyParser.json());
+exams.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 3000;
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-//app.use('/', express.static('public'));
-
-app.get('/', (req, res) => res.send('Hello World!'));
-
-/**
- * Exam structure
- */
-var exams = [{
+/*** DATABASE ***/
+var exams_db = [{
   id: 0,
   name: "esame se2",
   date: '27/11/2018',
@@ -29,26 +22,35 @@ var exams = [{
   tasklist: [12,13]
 }];
 
+
+/*** FUNCTIONS ***/
+
+
+/*** METHODS ***/
+/**
+* GET /exams
+* ...
+*/
 app.get('/exams/', function (req,res){
   res.status(200);
-  res.send(exams);
+  res.send(exams_db);
 });
 
 app.get('/exams/:id', function (req,res){
   var id = req.params.id;
 
-  if(id > exams.length || isNaN(id)){
+  if(id > exams_db.length || isNaN(id)){
     res.status(400);
     res.send();
   }else{
     res.status(200);
-    res.send(exams[id]);
+    res.send(exams_db[id]);
   }
 });
 
 app.post('/exams/', function (req, res) {
   var exam = req.body;
-  exam.id = exams.length + 1;
+  exam.id = exams_db.length + 1;
   exam.name = req.body.name;
   exam.date = req.body.date;
   exam.deadline = req.body.deadline;
@@ -58,33 +60,15 @@ app.post('/exams/', function (req, res) {
     res.status(400);
     res.send("a");
   }else{
-    exams.push(exam);
+    exams_db.push(exam);
 
-    res.location("/exams/" + exams.id); //resource at
+    res.location("/exams/" + exams_db.id); //resource at
     res.status(201);   //created
     res.send();
   }
 });
 
-/**
- * USERS
- */
-var users_app = require('./users');
-users_app.set(app);
 
-/**
- * TASKS
- */
-var tasks_app = require('./tasks');
-tasks_app.set(app);
-
-/**
- * SUBMISSIONS
- */
-var submissions_app = require('./submissions');
-submissions_app.set(app);
-
-
-module.exports = {app};
-
-app.listen(PORT, () => console.log('Example app listening on port '+ PORT));
+module.exports = {
+	exams: exams
+};
