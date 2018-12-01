@@ -62,7 +62,7 @@ app.post('/exams/', function (req, res) {
   }else{
     exams_db.push(exam);
 
-    res.location("/exams/" + exams_db.id); //resource at
+    res.location("/exams/" + exam.id); //resource at
     res.status(201);   //created
     res.send();
   }
