@@ -28,7 +28,7 @@ var submissions_db = [{
  * /SUBMISSIONS/ Verbs
  */
 
-app.get('/submissions/', function (req, res) {
+submissions.get('/submissions/', function (req, res) {
  if(submissions_db.lenght==0)
  {
   res.status(400)
@@ -41,7 +41,7 @@ app.get('/submissions/', function (req, res) {
  }
 });
 
-app.post('/submissions/', function (req, res) {
+submissions.post('/submissions/', function (req, res) {
   var submission = req.body;
   var error = 0;
   submission.id = submissions_db.lenght + 1;

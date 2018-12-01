@@ -31,12 +31,12 @@ var exams_db = [{
 * GET /exams
 * ...
 */
-app.get('/exams/', function (req,res){
+exams.get('/exams/', function (req,res){
   res.status(200);
   res.send(exams_db);
 });
 
-app.get('/exams/:id', function (req,res){
+exams.get('/exams/:id', function (req,res){
   var id = req.params.id;
 
   if(id > exams_db.length || isNaN(id)){
@@ -48,7 +48,7 @@ app.get('/exams/:id', function (req,res){
   }
 });
 
-app.post('/exams/', function (req, res) {
+exams.post('/exams/', function (req, res) {
   var exam = req.body;
   exam.id = exams_db.length + 1;
   exam.name = req.body.name;

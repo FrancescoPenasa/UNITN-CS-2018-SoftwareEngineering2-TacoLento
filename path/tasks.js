@@ -13,7 +13,7 @@ var tasks_db = [{}];
 
 
 /*** METHODS ***/
-app.get('/tasks/', function (req, res) {
+tasks.get('/tasks/', function (req, res) {
 	if(tasks_db.length < 2) {
 		res.status(404)
 		res.send("No tasks found")
@@ -24,7 +24,7 @@ app.get('/tasks/', function (req, res) {
 	}
 });
 
-app.post('/tasks/', function (req, res) {
+tasks.post('/tasks/', function (req, res) {
 	var error409 = 0;
 	var error400 = 0;
 	var task = req.body;
