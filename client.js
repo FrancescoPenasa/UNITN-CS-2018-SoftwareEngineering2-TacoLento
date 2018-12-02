@@ -1,25 +1,91 @@
+const fetch = require("node-fetch");
 
+//const url = "https://maps.googleapis.com/maps/api/geocode/json?address=Florence"
+//const url = "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400"
 
-/**
- * TEST FOR POST /USERS/  --> RESULTS ON GET /USERS/
-
-request.post(
-    'http://localhost:3000/users',
-    { json: {name: 'Pippo Franco', description: 'Pippo Franco', type: 'Pippo Franco' } },
-    function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(body)
-        }
+const url = "http://localhost:3000/"
+const get = async url => {
+    console.log('\ngetting ' + url)
+    try {
+        const response = await fetch(url);
+        const json = await response.json();
+        console.log(json)
+    } catch (error) {
+        console.log(error);
     }
-);
-*/
+};
 
-request.post(
-    'http://localhost:3000/exams',
-    { json: {name: 'Analisi 1', date: '27/11/2018', deadline: '28/11/2018 19:00', questions_N: 5} },
-    function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(body)
-        }
+
+async function postBody(url, body) {
+    console.log('\nposting ' + url, body)
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        });
+        console.log(response.status)
+        const json = await response.json();
+        console.log(json)
+    } catch (error) {
+        console.log(error);
     }
-);
+}
+
+async function postQuery(url, params) {
+    console.log('\nposting params to ' + url, params)
+
+    try {
+        const response = await fetch(url+params, {
+            method: 'POST',
+            // body: JSON.stringify(body),
+            // headers: { 'Content-Type': 'application/json' },
+        });
+        console.log(response.status)
+        const json = await response.json();
+        console.log(json)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function deleteResource(url,resource_ID) {
+    console.log('\ndeleting ' + url, resource_ID)
+
+    try {
+        const response = await fetch(url+'/'+resource_ID, {
+            method: 'DELETE',
+            //body: JSON.stringify(body),
+            //headers: { 'Content-Type': 'application/json' },
+        });
+        console.log(response.status)
+        // const json = await response.json();
+        // console.log(json)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+// getLocation(url);
+
+get(url+'users')
+
+
+postBody(url+'users',{name: 'hello course', surname:"pippero",
+email:"pippero4", password:"pippero2" })
+
+get(url+'users')
+
+//postQuery (url+'students','?newstudent=45')
+
+//deleteResource(url+'users', 'hellocourse')
+
+get(url+'users')
+
+// deleteCourse('28')
