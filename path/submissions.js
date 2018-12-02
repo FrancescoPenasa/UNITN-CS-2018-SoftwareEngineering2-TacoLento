@@ -92,7 +92,7 @@ function delete_submissions(sub_Id)
 {
  	let sub = submissions_db.find(x => x.id === sub_Id);
   	let index = array.indexOf(sub);
-  	submissions_db[index] = sub_Id;
+  	submissions_db[index] = {};
 }
 
 //-----------------------------
@@ -102,7 +102,7 @@ function update_submissions(sub_Id,update_sub)
 {
  	let sub = submissions_db.find(x => x.id === sub_Id);
   	let index = array.indexOf(sub);
-  	submissions_db[index] = {};
+  	submissions_db[index] = update_sub;
 }	
 
 
