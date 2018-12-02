@@ -121,7 +121,7 @@ submissions.get('/submissions/', function (req, res)
  	else
  	{
   		res.status(200);
-  		res.send(submissions_db);
+  		res.json(submissions_db);
  	}
 });
 
