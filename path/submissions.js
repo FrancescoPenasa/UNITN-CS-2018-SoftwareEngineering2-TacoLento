@@ -22,10 +22,12 @@ var submissions_db = [{
 
 
 /*** FUNCTIONS ***/
-/*** create a new submissions ***/
+//-----------------------------
+// CREATE A SUBMISSIONS
+//-----------------------------
 function create_submissions(req)
 {
-	return submissions = 
+	return submission = 
 	{
 		id : (submissions_db.lenght),
   		date : req.body.date,
@@ -34,13 +36,17 @@ function create_submissions(req)
   		answers : [req.body.idTask , req.body.answer]
 	};
 }
-
-function input_validity(submissions)
+//-----------------------------
+// CHECK INPUT 
+//-----------------------------
+function input_validity(submission)
 {
-	if (isNaN(submissions.date) || isNaN(submissions.userId) || isNaN(submissions.examId) || isNaN(submissions.answer.idTask))
+	if (isNaN(submission.date) || isNaN(submission.userId) || isNaN(submission.examId) || isNaN(submission.answer.idTask))
 		return false
 }
-
+//-----------------------------
+// CHECK SUBMISSIONS ID
+//-----------------------------
 function input_validity(id)
 {
 	if(!(isNaN(id)))
@@ -53,7 +59,9 @@ function input_validity(id)
 		return false
 	return true
 }
-
+//-----------------------------
+// CHECK USER ID
+//-----------------------------
 function userId_validity(userId)
 {
 	if(!(isNaN(userId)))
@@ -64,7 +72,9 @@ function userId_validity(userId)
 		return false
 	return true
 }
-
+//-----------------------------
+// CHECK EXAM ID
+//-----------------------------
 function examId_validity(examId)
 {
 	if(!(isNaN(examId)))
@@ -75,33 +85,44 @@ function examId_validity(examId)
 		return false
 	return true
 }
-
+//-----------------------------
+// DELETE SUBMISSIONS
+//-----------------------------
 function delete_submissions(sub_Id)
 {
- 	let sub = submissions_db.find(x => x.id === submissions_id);
+ 	let sub = submissions_db.find(x => x.id === sub_Id);
+  	let index = array.indexOf(sub);
+  	submissions_db[index] = sub_Id;
+}
+
+//-----------------------------
+// UPDATE SUBMISSIONS
+//-----------------------------
+function update_submissions(sub_Id,update_sub)
+{
+ 	let sub = submissions_db.find(x => x.id === sub_Id);
   	let index = array.indexOf(sub);
   	submissions_db[index] = {};
 }	
 
 
-/**
- * /SUBMISSIONS/ Verbs
- */
 
+/** VERBS **/
 //-----------------------------
 // GET /submissions/
 //-----------------------------
-submissions.get('/submissions/', function (req, res) {
- if(submissions_db.lenght==0)
- {
-  res.status(400)
-  res.send("No submissions found")
- }
- else
- {
-  res.status(200);
-  res.send(submissions_db);
- }
+submissions.get('/submissions/', function (req, res) 
+{
+	if(submissions_db.lenght==0)
+ 	{
+  		res.status(400)
+  		res.send("No submissions found")
+ 	}
+ 	else
+ 	{
+  		res.status(200);
+  		res.send(submissions_db);
+ 	}
 });
 
 //-----------------------------
@@ -130,8 +151,89 @@ submissions.post('/submissions/', function (req, res)
 	submissions_db.push(submission);
     	res.location("/" + submission.id);
     	res.status(201);
-    	return res.send();
+    	return res.send("Submissions created");
   	}
+});
+
+//-----------------------------
+// GET /submissions/id
+//-----------------------------
+submissions.get('/:id', async(req,res) => 
+{
+	let id = req.params.id;
+	if(!(id_validity(id)))
+	{
+		res.status(400)
+		return res.send("invalid id")
+	}
+	if(id >= submissions_db.lenght)
+	{
+		res.status(404)
+		return res.send("invalid id")
+	}
+	if(submissions_db.lenght == 0)
+	{
+		res.status(400)
+		return res.send("no submissions on db")
+	}
+	res.status(302);
+	return res.json(submissions_db[id]);
+});
+
+
+//-----------------------------
+// PUT /submissions/id
+//-----------------------------
+
+submissions.put('/:id', async (req, res) => 
+{
+	let id = req.params.id;
+	let submission = create_submissions(req)
+	if(!(input_validity(submission)))
+  	{
+		res.status(400)
+		return res.send("invalid input")
+	}
+	if(!(userId_validity(submission.userId)))
+	{
+		res.status(400)
+		return res.send("invalid userId")
+	}
+	if(!(examId_validity(submission.examId)))
+	{
+		res.status(400)
+		return res.send("invalid examId")
+	}
+	update_submissions(id,submission);
+	res.status(202);
+	return res.send("user updated");
+  	}
+});
+
+
+//-----------------------------
+// DELETE /submissions/id
+//-----------------------------
+submissions.delete('/:id', async(req,res) => {
+	let id = req.params.id;
+	if(!(id_validity(id)))
+	{
+		res.status(400)
+		return res.send("invalid input")
+	}
+	if(id >= submissions_db.lenght)
+	{
+		res.status(404)
+		return res.send("invalid id")
+	}
+	if(submissions_db.lenght == 0)
+	{
+		res.status(400)
+		return res.send("no submissions on db")
+	}
+	remove_submissions(id);
+	res.status(202);
+	res.send("user removed");
 });
 
 module.exports = {
