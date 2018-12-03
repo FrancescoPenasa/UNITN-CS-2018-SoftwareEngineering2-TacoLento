@@ -152,7 +152,6 @@ submissions.post('/submissions/', function (req, res)
     	res.location("/" + submission.id);
     	res.status(201);
     	return res.send("Submissions created");
-  	}
 });
 
 //-----------------------------
@@ -207,7 +206,6 @@ submissions.put('/:id', async (req, res) =>
 	update_submissions(id,submission);
 	res.status(202);
 	return res.send("user updated");
-  	}
 });
 
 
