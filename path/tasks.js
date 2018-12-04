@@ -11,6 +11,36 @@ var tasks_db = [{}];
 
 /*** FUNCTIONS ***/
 
+function inputIsValid(task){
+	if(task.taskType != "OP" && task.taskType != "SC" && task.taskType != "MC")
+		return false;
+	if(task.question == "" || task.question == null)
+		return false;
+	if(task.subject == "" || task.subject == null)
+		return false;
+  return true;
+}
+
+function idIsValid(id){
+  if (isNaN(id) || id == null || id%1 !== 0 || tasks_db[id] == {} || id < 0)
+    return false;
+  return true;
+}
+
+function createTask(req){
+  return task = {
+		id : (tasks_db.length),
+		taskType : req.body.taskType,
+		question : req.body.question,
+		subject : req.body.subject
+  };
+}
+
+function removeTask(id){
+  let task = tasks_db.find(x => x.id === id);
+  let i = array.indexOf(task);
+  tasks_db[i] = {};
+}
 
 /*** METHODS ***/
 tasks.get('/tasks/', function (req, res) {
@@ -20,40 +50,71 @@ tasks.get('/tasks/', function (req, res) {
 	}
 	else{
 		res.status(200);
-		res.send(users);
+		res.send(tasks);
 	}
 });
 
 tasks.post('/tasks/', function (req, res) {
-	var error409 = 0;
-	var error400 = 0;
-	var task = req.body;
-	task.id = tasks_db.length + 1;
-	task.taskType = req.body.taskType
-	task.question = req.body.question
-	task.subject = req.body.subject
+	var task = createTask(req);
 
-	///// Look if input is correct /////
-	if(task.taskType != "OP" && task.taskType != "SC" && task.taskType != "MC")
-		error400 = 1;
-	if(task.question == "")
-		error400 = 1;
-	if(task.subject == "")
-		error400 = 1;
-	//if(isNaN(task.question) || isNaN(task.subject) || isNaN(task.taskType))
-
-	if(error400 != 0){
-			res.status(400)
-			res.send("Invalid Input")
-	}
-	///////////////////////////
-
-	if( error400 == 0 && error409 == 0){
+	if(inputIsValid(task)){
 		tasks.push(task);
 		res.location("/tasks/" + task.id);
 		res.status(201);
 		res.send();
+	}else{
+		res.status(400)
+		res.send("Invalid Input")
 	}
+});
+
+tasks.get('/:id', async (req, res) => {
+  let id = req.params.id;
+
+  if(! (idIsValid(id))){
+    res.status(400)
+    return res.send()
+  }
+  if(id >= tasks_db.length){
+    res.status(404)
+    return res.send()
+  }
+  res.status(302);
+  return res.json(tasks_db[id]);
+});
+
+tasks.put('/:id', async (req, res) => {
+  let id = req.params.id;
+  let task = createTask(req);
+  if(!(idIsValid(id)) || !(inputIsValid(task))){
+    res.status(400)
+    return res.send()
+  }
+
+  if(id >= tasks_db.length){
+    res.status(404)
+    return res.send()
+  }
+
+  tasks_db[id] = task;
+  res.status(202);
+  res.send();
+});
+
+tasks.delete('/:id', async (req, res) => {
+  let id = req.params.id;
+
+  if(!(idIsValid(id))){
+    res.status(400)
+    return res.send()
+  }
+  if(id >= tasks_db.length){
+    res.status(404)
+    return res.send()
+  }
+  removeTask(id);
+  res.status(202);
+  res.send();
 });
 
 
