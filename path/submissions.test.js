@@ -349,7 +349,7 @@ test('POST /submission/', (done) => {
 			date : "",
 			userId : 1,
 			examId : 2,
-			answer: [1.1,"test"]
+			answer: [1,"test"]
 	}).set('Accept', 'application/json').expect(400)
 	done();
 });
@@ -358,7 +358,357 @@ test('POST /submission/', (done) => {
 //---------------------PUT----------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+//------------------------------------------------------
+// PUT /submissions/id with valid and exist id must return 202
+//------------------------------------------------------
+test('PUT /submisisons/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "29/11/2018",
+							userId : 3,
+							examId : 3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(202)
+			})
+			done();
+});
 
+//------------------------------------------------------
+// PUT /submissions/id with no exist id must return 404
+//------------------------------------------------------
+test('PUT /users/id', (done) => 
+{
+	request(app).put('submissions/1000').send({
+			id : 1000,
+			date : "29/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"answer update"]
+		}).set('Accept', 'application/json').expect(404)
+		done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with invalid data must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "",
+							userId : 3,
+							examId : 3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+
+//------------------------------------------------------
+// PUT /submissions/id with invalid userId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : "abc",
+							examId : 3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with invalid examId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : "abc",
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with invalid taskId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : 3,
+							answer: ["abc","answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with not integer userId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 1.1,
+							examId : 3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with not integer examId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : 3.3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with not integer taskId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : 3,
+							answer: [1.1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with null userId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : null,
+							examId : 3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with null examId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : null,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with null taskId must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : 3,
+							answer: [null,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with userId=-3 must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : -3,
+							examId : 3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with examId=-3 must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : -3,
+							answer: [1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
+
+//------------------------------------------------------
+// PUT /submissions/id with taskId=-1 must return 400
+//------------------------------------------------------
+test('PUT /submissions/id', (done) => 
+{
+	request(app).post(/submissions/).send({
+			id : 3,
+			date : "28/11/2018",
+			userId : 3,
+			examId : 3,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+			{
+				return request(app).put('submissions/3').send({
+							id : 3,
+							date : "28/11/2018",
+							userId : 3,
+							examId : 3,
+							answer: [-1,"answer update"]
+					 	}).set('Accept', 'application/json').expect(400)
+			})
+			done();
+});
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 //--------------------DELETE-------------------------
