@@ -364,43 +364,47 @@ test('POST /submission/', (done) => {
 //--------------------DELETE-------------------------
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
-
-
-
-
-/**
 //------------------------------------------------------
-// GET /submissions/ with no empty submissions list must return 200 and the entire sub list
+// DELETE /submissions/id with valid and exist id must return 200
 //------------------------------------------------------
-test('put /submissions/subid', () => {
-	const response = request(app).put('/submissions/456');
-	expect(response.status).toEqual(404);
+test('delete /submission/id', async () => 
+{
+	const response = await request(app).delete('/submissions/1');
+	expect(response.status).toEqual(200);
 });
 
-
 //------------------------------------------------------
-// GET /submissions/ with no empty submissions list must return 200 and the entire sub list
+// DELETE /submissions/id with not exist id must return 404
 //------------------------------------------------------
-test('delete /submission/subid', () => {
-	const response = request(app).delete('/submissions/1');
-	expect(response.status).toEqual(201);
+test('delete /submission/id', (done) => 
+{
+	request(app).delete('/submissions/1000').expect(404)
+	done();
 });
 
-
 //------------------------------------------------------
-// GET /submissions/ with no empty submissions list must return 200 and the entire sub list
+// DELETE /submissions/id with invalid id must return 400
 //------------------------------------------------------
-test('delete /submission/subid', () => {
-	const response = request(app).delete('/submissions/abc');
-	expect(response.status).toEqual(400);
+test('delete /submission/id', (done) => 
+{
+	request(app).delete('/submissions/abc').expect(400)
+	done();
 });
 
+//------------------------------------------------------
+// DELETE /submissions/id with not integer id must return 400 
+//------------------------------------------------------
+test('delete /submission/id', (done) => 
+{
+	request(app).delete('/submissions/1.1').expect(400)
+	done();
+});
 
 //------------------------------------------------------
-// GET /submissions/ with no empty submissions list must return 200 and the entire sub list
+// DELETE /submissions/id with negative id must return 400 
 //------------------------------------------------------
-test('delete /submissions/subid', () => {
-	const response = request(app).delete('/submissions/456');
-	expect(response.status).toEqual(404);
-});**/
+test('delete /submission/id', (done) => 
+{
+	request(app).delete('/submissions/-1').expect(400)
+	done();
+});
