@@ -229,7 +229,7 @@ submissions.delete('/:id', async(req,res) => {
 		res.status(400)
 		return res.send("no submissions on db")
 	}
-	remove_submissions(id);
+	delete_submissions(id);
 	res.status(202);
 	res.send("user removed");
 });
