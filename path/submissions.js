@@ -55,6 +55,8 @@ function input_validity(id)
 		return false
 	if(id % 1 !== 0)
 		return false
+	if(id < 0)
+		return false
 	if(submissions_db[id] = {})
 		return false
 	return true
@@ -70,6 +72,8 @@ function userId_validity(userId)
 		return false
 	if(userId % 1 !== 0)
 		return false
+	if(userId < 0)
+		return false
 	return true
 }
 //-----------------------------
@@ -82,6 +86,24 @@ function examId_validity(examId)
 	if(examId == null)
 		return false
 	if(examId % 1 !== 0)
+		return false
+	if(examId < 0)
+		return false
+	return true
+}
+
+//-----------------------------
+// CHECK TASK ID
+//-----------------------------
+function taskId_validity(taskId)
+{
+	if(!(isNaN(taskId)))
+		return false
+	if(taskId == null)
+		return false
+	if(taskId % 1 !== 0)
+		return false
+	if(taskId < 0)
 		return false
 	return true
 }
@@ -147,6 +169,11 @@ submissions.post('/submissions/', function (req, res)
 		res.status(400)
 		return res.send("invalid examId")
 	}
+	if(!(taskId_validity(submission.answer.taskId)))
+	{
+		res.status(400)
+		return res.send("invalid examId")
+	}
 	
 	submissions_db.push(submission);
     	res.location("/" + submission.id);
@@ -203,6 +230,11 @@ submissions.put('/:id', async (req, res) =>
 		res.status(400)
 		return res.send("invalid examId")
 	}
+	if(!(taskId_validity(submission.answer.taskId)))
+	{
+		res.status(400)
+		return res.send("invalid examId")
+	}
 	update_submissions(id,submission);
 	res.status(202);
 	return res.send("user updated");
@@ -221,12 +253,12 @@ submissions.delete('/:id', async(req,res) => {
 	}
 	if(id >= submissions_db.lenght)
 	{
-		res.status(404)
+		res.status(400)
 		return res.send("invalid id")
 	}
 	if(submissions_db.lenght == 0)
 	{
-		res.status(400)
+		res.status(404)
 		return res.send("no submissions on db")
 	}
 	delete_submissions(id);
