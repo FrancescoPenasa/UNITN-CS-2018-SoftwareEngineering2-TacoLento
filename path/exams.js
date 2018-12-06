@@ -8,13 +8,13 @@ exams.use(bodyParser.urlencoded({ extended: true }));
 /*** DATABASE ***/
 var exams_db = [{
   id: 0,
-  name: "esame se2",
+  name: "Esame Ingegneria del Software 2",
   date: '27/11/2018',
   deadline: '28/11/2018 18:30',
   tasks: [1,2,3,4,5,6,7,8,9,10]
 },{
   id: 1,
-  name: "esame web",
+  name: "Esame di Programmazione Web",
   date: '30/11/2018',
   deadline: '25/12/2018 18:30',
   tasks: [12,13]
@@ -27,7 +27,7 @@ var exams_db = [{
 * create an object exam using the parameters from the body of the request.
 */
 function create_exam(req){
-  return exam = {
+  return {
     id : (exams_db.length),
     name : req.body.name,
     date : req.body.date,
@@ -70,6 +70,7 @@ function input_validity(exam){
 * Id not valid if:
 * - id is not a number                    -> 400 Bad Request
 * - id is a float                         -> 400 Bad Request
+* - id is a negative number               -> 400 Bad Request
 * - id is greater than the array length   -> 404 Not Found
 * - id of a deleted exam                  -> 410 Gone
 */
@@ -77,6 +78,8 @@ function id_validity(id){
   if(isNaN(id))
     return 400;
   if(id % 1 != 0)
+    return 400;
+  if(id < 0)
     return 400;
   if(id >= exams_db.length)
     return 404;
@@ -87,6 +90,7 @@ function id_validity(id){
 }
 
 /*** METHODS ***/
+
 /**
 * GET /exams
 * Return all the exams stored in the db.

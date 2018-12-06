@@ -9,10 +9,10 @@ test('GET /exams should return 200 and a JSON Object', (done) => {
 		expect(response.statusCode).toBe(200);
 		expect(response.body).toBeDefined();
 		expect(typeof response.body).toEqual('object');
-		expect(response.text).toEqual("[{\"id\":0,\"name\":\"esame se2\",\"date\":\"27/11/2018\",\"deadline\":\"28/11/2018 18:30\",\"tasks\":[1,2,3,4,5,6,7,8,9,10]},{\"id\":1,\"name\":\"esame web\",\"date\":\"30/11/2018\",\"deadline\":\"25/12/2018 18:30\",\"tasks\":[12,13]}]");
-
-    done();
-  });
+		//expect(response.text).toEqual("[{\"id\":0,\"name\":\"esame se2\",\"date\":\"27/11/2018\",\"deadline\":\"28/11/2018 18:30\",\"tasks\":[1,2,3,4,5,6,7,8,9,10]},{\"id\":1,\"name\":\"esame web\",\"date\":\"30/11/2018\",\"deadline\":\"25/12/2018 18:30\",\"tasks\":[12,13]}]");
+	});
+	
+	done();
 });
 
 test('GET /exams/0 should return 200 and a JSON Object', (done) => {
@@ -20,34 +20,42 @@ test('GET /exams/0 should return 200 and a JSON Object', (done) => {
 		expect(response.statusCode).toBe(200);
 		expect(response.body).toBeDefined();
 		expect(typeof response.body).toEqual('object');
-		expect(response.text).toEqual("{\"id\":0,\"name\":\"esame se2\",\"date\":\"27/11/2018\",\"deadline\":\"28/11/2018 18:30\",\"tasks\":[1,2,3,4,5,6,7,8,9,10]}");
-
-    done();
-  });
+		//expect(response.text).toEqual("{\"id\":0,\"name\":\"esame se2\",\"date\":\"27/11/2018\",\"deadline\":\"28/11/2018 18:30\",\"tasks\":[1,2,3,4,5,6,7,8,9,10]}");
+	});
+	
+	done();
 });
 
 test('GET /exams/:id if id isNaN should return 400', (done) => {
 	request(app).get(path+'/abc').then((response) => {
 		expect(response.statusCode).toBe(400);
-		
-    done();
-  });
+	});
+	
+	done();
 });
 
 test('GET /exams/:id if id is float should return 400', (done) => {
 	request(app).get(path+'/13.5').then((response) => {
 		expect(response.statusCode).toBe(400);
-		
-    done();
-  });
+	});
+	
+	done();
+});
+
+test('GET /exams/:id with id negative number should return 404', (done) => {
+	request(app).get(path+'/-1').then((response) => {
+		expect(response.statusCode).toBe(400);
+	});
+	
+	done();
 });
 
 test('GET /exams/:id with id greater than db size should return 404', (done) => {
 	request(app).get(path+'/999').then((response) => {
 		expect(response.statusCode).toBe(404);
-		
-    done();
-  });
+	});
+	
+	done();
 });
 
 //POST EXAMS

@@ -10,7 +10,7 @@ var app = require('../index');
 //------------------------------------------------------
 // GET /submissions/ with no empty submissions list must return 200 and the entire sub list
 //------------------------------------------------------
-test('get /submissions/', () => {
+test('get /submissions/', async () => {
 	const response = await request(app).get('/submissions');
 	expect (response.status).toEqual(200);
 	expect (response.text).toContain([{id: 1, date: '23 novembre 2018', userId: 1, examId: 1, answer: [{idTask: 1, answer: 'test'}]}]);

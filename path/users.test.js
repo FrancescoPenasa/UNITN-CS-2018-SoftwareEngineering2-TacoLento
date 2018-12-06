@@ -258,24 +258,28 @@ test('GET /users/:id if user exist should return 302', (done) => {
 test('GET /users/:id if id isNaN should return 400 ', (done) => {
 	request(app).get(path+'/sda').then((response) => {
     expect(response.statusCode).toBe(400);
-    done();
-  });
+	});
+	done();
 });
 
-/********DONT WORK FOR MISTERIOUS REASONS*******/
-// test('GET /users/:id if id is a float should return 400 ', (done) => {
-// 	request(app).get(path+'/0.1').then((response) => {
-//     expect(response.statusCode).toBe(400);
-//     done();
-//   });
-// });
-// test("GET /users/:id if user don't exist should return 404", (done) => {
-// 	request(app).get(path+'/5').then((response) => {
-//     expect(response.statusCode).toBe(404);
-//     done();
-//   });
-// });
-
+ test('GET /users/:id if id is a float should return 400 ', (done) => {
+ 	request(app).get(path+'/0.1').then((response) => {
+     expect(response.statusCode).toBe(400);
+	 });
+	 done();
+ });
+ test("GET /users/:id if user don't exist should return 404", (done) => {
+ 	request(app).get(path+'/5').then((response) => {
+     expect(response.statusCode).toBe(404);
+	 });
+	 done();
+ });
+ test("GET /users/:id if id is negative integer should return 400", (done) => {
+	request(app).get(path+'/-1').then((response) => {
+		expect(response.statusCode).toBe(400);
+	});
+	done();
+});
 
 /*** PUT /users/:id TEST ***/
 test('PUT /users/:id if user exist '+

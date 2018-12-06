@@ -31,7 +31,7 @@ var users_db = [{
 * create an object user using the parameters from the body of the request.
 */
 function create_user(req){
-  return user = {
+  return {
     id : (users_db.length),
     name : req.body.name,
     surname : req.body.surname,
@@ -63,14 +63,17 @@ function input_validity(user){
 * - id is not a number
 * - id is a float
 * - id is null
+* - id is a negative integer
 * - id of a deleted user
 */
 function id_validity(id){
-  if (!(isNaN(id)))
+  if ((isNaN(id)))
     return false
   if (id==null)
     return false
   if (id % 1 !== 0)
+    return false
+  if(id < 0)
     return false
   if (users_db[id] == {})
     return false
