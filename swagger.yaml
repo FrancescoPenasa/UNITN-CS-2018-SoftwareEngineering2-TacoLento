@@ -688,11 +688,6 @@ definitions:
               format: "int64"
               description: deadline year
               minimum: 2018
-      Question_N: 
-        type: integer
-        description: number of question
-        minimum: 1
-        maximum: 20
       TaskList:
         type: array
         items:
