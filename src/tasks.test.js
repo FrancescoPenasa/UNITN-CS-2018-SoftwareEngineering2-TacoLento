@@ -32,7 +32,11 @@ test('GET /tasks/ Should return 404 if tasks is an empty set', (done) => {
 test('GET /tasks/ Should return 200 and the list of all the tasks ', (done) => {
 	request(app)
 	.post(path)
-	.send(validInput)
+	.send({
+    taskType:	"OP",
+    question:	"Is this a question?",
+    subject: 	"Math"
+  })
   .set('Accept', 'application/json')
   .expect(201)
 	.then(r => {
@@ -149,12 +153,12 @@ test('POST /tasks/ should return 400 because subject is null', (done) => {
 
 /*******    TSET CASES: GET /tsaks/:id    *******/
 
-// test('GET /tasks/:id if id is NaN should return 400 ', (done) => {
-// 	request(app).get(path+'/aaaa').then((response) => {
-//     expect(response.statusCode).toBe(400);
-//     done()
-//   });
-// });
+test('GET /tasks/:id if id is NaN should return 400 ', (done) => {
+	request(app).get(path+'/aaaa').then((response) => {
+    expect(response.statusCode).toBe(400);
+    done()
+  });
+});
 
 test('GET /tasks/:id should return 302 if task exist', (done) => {
 	request(app)
@@ -186,8 +190,8 @@ test('PUT /tasks/:id if task exist and input is valid should return 202', (done)
 		 .send(validInput2)
 		 .set('Accept', 'application/json')
 	   .expect(202)
-     done()
 		 })
+  done()
 });
 
 test('PUT /tasks/:id if task exist and input is not valid should return 400', (done) => {request(app)
@@ -205,8 +209,8 @@ test('PUT /tasks/:id if task exist and input is not valid should return 400', (d
      })
 		 .set('Accept', 'application/json')
 	   .expect(400)
-     done()
 	})
+  done()
 });
 
 test("PUT /tasks/:id if don't exist should return 404", (done) => {
@@ -231,8 +235,8 @@ test("DELETE /tasks/:id if task exist should return 202", (done) => {
 		.delete(path+'/1')
 		.set('Accept', 'application/json')
 		.expect(202)
-    done()
 	})
+  done()
 });
 
 test("DELETE /tasks/:id if id isNaN should return 400", (done) => {
@@ -246,8 +250,8 @@ test("DELETE /tasks/:id if id isNaN should return 400", (done) => {
 		.delete(path+'/aaaaa')
 		.set('Accept', 'application/json')
 		.expect(400)
-    done()
 	})
+  done()
 });
 
 test("DELETE /tasks/:id if id isFloat should return 400", (done) => {
@@ -261,8 +265,8 @@ test("DELETE /tasks/:id if id isFloat should return 400", (done) => {
 		.delete(path+'/3.14')
 		.set('Accept', 'application/json')
 		.expect(400)
-    done()
 	})
+  done()
 });
 
 test("DELETE /tasks/:id should return 404 if don't exist ", (done) => {
