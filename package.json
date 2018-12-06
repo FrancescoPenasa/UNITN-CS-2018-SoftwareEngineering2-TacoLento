@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "jest"
+    "test": "jest-run"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "collectCoverage": true
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jest-run": "^1.0.0"
   }
 }
