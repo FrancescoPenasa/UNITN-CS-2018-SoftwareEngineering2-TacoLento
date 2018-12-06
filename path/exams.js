@@ -11,14 +11,12 @@ var exams_db = [{
   name: "esame se2",
   date: '27/11/2018',
   deadline: '28/11/2018 18:30',
-  questions_N: 10,
   tasks: [1,2,3,4,5,6,7,8,9,10]
 },{
   id: 1,
   name: "esame web",
   date: '30/11/2018',
   deadline: '25/12/2018 18:30',
-  questions_N: 2,
   tasks: [12,13]
 }];
 
@@ -34,7 +32,6 @@ function create_exam(req){
     name : req.body.name,
     date : req.body.date,
     deadline : req.body.deadline,
-    questions_N : req.body.questions_N,
     tasks : req.body.tasks
   };
 }
@@ -54,7 +51,6 @@ function remove_exam(exam_id){
 * - name is not a string or is an empty string
 * - date is not a string or is an empty string
 * - deadline is not a string or is an empty string
-* - questions_N is not a number or is less than 1
 * - tasks is not an array or is an empty array
 */
 function input_validity(exam){
@@ -63,8 +59,6 @@ function input_validity(exam){
   if(typeof exam.date != "string" || exam.date.length<1)
     return false;
   if(typeof exam.deadline != "string" || exam.deadline.length<1)
-    return false;
-  if(typeof exam.questions_N != "number" || exam.questions_N<1)
     return false;
   if(typeof exam.tasks != "object" || exam.tasks.length<1)
     return false;
@@ -89,7 +83,7 @@ function id_validity(id){
   if(exams_db[id] == {})
     return 410;
 
-  return true;
+  return 1;
 }
 
 /*** METHODS ***/
@@ -116,7 +110,7 @@ exams.get('/:id', async (req, res) => {
   let id = req.params.id;
   let id_val = id_validity(id);
 
-  if(id_val){
+  if(id_val == 1){
     res.status(200);
     return res.json(exams_db[id]);
   }else{
@@ -132,7 +126,7 @@ exams.get('/:id', async (req, res) => {
 exams.post('/', async (req, res) => {
   let exam = create_exam(req)
 
-  if(input_validity(exam)){
+  if(input_validity(exam) == 1){
     exams_db.push(exam);
     res.location('/'+exam.id);
     res.status(201);
@@ -152,7 +146,7 @@ exams.put('/:id', async (req, res) => {
   let id_val = id_validity(id);
   let exam = create_exam(req);
 
-  if(id_val && input_validity(exam)){
+  if(id_val == 1 && input_validity(exam)){
     exams_db[id] = exam;
     res.status(200);
     return res.send("Exam updated");
@@ -170,7 +164,7 @@ exams.delete('/:id', async (req, res) => {
   let id = req.params.id;
   let id_val = id_validity(id);
 
-  if(id_val){
+  if(id_val == 1){
     remove_exam(id);
     res.status(200);
     return res.send("Exam deleted");
