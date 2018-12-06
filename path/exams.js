@@ -22,7 +22,6 @@ var exams_db = [{
   tasks: [12,13]
 }];
 
-
 /*** FUNCTIONS ***/
 
 /**
@@ -74,19 +73,23 @@ function input_validity(exam){
 }
 
 /**
-* Id not valid if
-* - id is not a number
-* - id is a float
-* - id of a deleted exam
+* Id not valid if:
+* - id is not a number                    -> 400 Bad Request
+* - id is a float                         -> 400 Bad Request
+* - id is greater than the array length   -> 404 Not Found
+* - id of a deleted exam                  -> 410 Gone
 */
 function id_validity(id){
   if(isNaN(id))
-    return false;
+    return 400;
   if(id % 1 != 0)
-    return false;
+    return 400;
+  if(id >= exams_db.length)
+    return 404;
   if(exams_db[id] == {})
-    return false;
-  return true
+    return 410;
+
+  return true;
 }
 
 /*** METHODS ***/
@@ -96,12 +99,12 @@ function id_validity(id){
 */
 exams.get('/', function (req,res){
   if (exams_db.length < 0) {
-    res.status(404)
-    res.send("No exams found")
+    res.status(404);
+    return res.send("No exams found");
   }
   else{
     res.status(200);
-    res.json(exams_db);
+    return res.json(exams_db);
   }
 });
 
@@ -111,19 +114,15 @@ exams.get('/', function (req,res){
 */
 exams.get('/:id', async (req, res) => {
   let id = req.params.id;
-  
-  if(!(id_validity(id))){
-    res.status(400)
-    return res.send()
-  }
+  let id_val = id_validity(id);
 
-  if(id >= exams_db.length){
-    res.status(404)
-    return res.send()
+  if(id_val){
+    res.status(200);
+    return res.json(exams_db[id]);
+  }else{
+    res.status(id_val)
+    return res.send("Invalid id");
   }
-
-  res.status(200);
-  return res.json(exams_db[id]);
 });
 
 /**
@@ -133,15 +132,15 @@ exams.get('/:id', async (req, res) => {
 exams.post('/', async (req, res) => {
   let exam = create_exam(req)
 
-  if (!(input_validity(exam))){
-    res.status(400)
-    return res.send("Invalid input")
+  if(input_validity(exam)){
+    exams_db.push(exam);
+    res.location('/'+exam.id);
+    res.status(201);
+    return res.send("Exam created");
+  }else{
+    res.status(400);
+    return res.send("Invalid input");
   }
-
-  exams_db.push(exam);
-  res.location('/'+exam.id);
-  res.status(201);
-  return res.send();
 });
 
 /**
@@ -150,21 +149,17 @@ exams.post('/', async (req, res) => {
 */
 exams.put('/:id', async (req, res) => {
   let id = req.params.id;
+  let id_val = id_validity(id);
   let exam = create_exam(req);
 
-  if(!id_validity(id) || !input_validity(exam)){
-    res.status(400)
-    return res.send()
+  if(id_val && input_validity(exam)){
+    exams_db[id] = exam;
+    res.status(200);
+    return res.send("Exam updated");
+  }else{
+    res.status(id_val);
+    return res.send("Invalid input");
   }
-
-  if(id >= exams_db.length){
-    res.status(404)
-    return res.send()
-  }
-
-  exams_db[id] = exam;
-  res.status(200);
-  res.send();
 });
 
 /**
@@ -173,20 +168,16 @@ exams.put('/:id', async (req, res) => {
 */
 exams.delete('/:id', async (req, res) => {
   let id = req.params.id;
+  let id_val = id_validity(id);
 
-  if(!(id_validity(id))){
-    res.status(400)
-    return res.send()
+  if(id_val){
+    remove_exam(id);
+    res.status(200);
+    return res.send("Exam deleted");
+  }else{
+    res.status(id_val);
+    return res.send("Invalid input");
   }
-
-  if(id >= exams_db.length){
-    res.status(404)
-    return res.send()
-  }
-
-  remove_exam(id);
-  res.status(200);
-  res.send();
 });
 
 module.exports = {
