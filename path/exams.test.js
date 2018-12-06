@@ -247,54 +247,32 @@ test('POST /exams/ with empty tasks should return 400', (done) => {
 });
 
 //PUT EXAMS
-test('PUT /exams/:id should return 202', (done) => {request(app)
-	.post(path)
+test('PUT /exams/:id should return 202', (done) => {
+	request(app)
+	.put(path+'/1')
 	.send({
-		name: 'Esame Prova',
-		date: '25/12/2048',
-		deadline: '31/12/2055 01:11',
-		tasks: [1,6,3]
+		name: 'Esame Prova2',
+		date: '66/66/6666',
+		deadline: '77/77/7777 77:77',
+		tasks: [7,77,777]
 	})
-  .set('Accept', 'application/json')
-  .expect(201)
-	.then(r => {
-		return request(app)
-		.put(path+'/2')
-		.send({
-			name: 'Esame Prova2',
-			date: '66/66/6666',
-			deadline: '77/77/7777 77:77',
-			tasks: [7,77,777]
-		})
-		.set('Accept', 'application/json')
-		.expect(202)
-	})
+	.set('Accept', 'application/json')
+	.expect(202)
 
   done();
 });
 
-test('PUT /exams/:id if exam exists and input is not valid should return 400', (done) => {request(app)
-	.post(path)
+test('PUT /exams/:id if exam exists and input is not valid should return 400', (done) => {
+	request(app)
+	.put(path+'/1')
 	.send({
-		name: 'Esame Prova',
-		date: '25/12/2048',
-		deadline: '31/12/2055 01:11',
-		tasks: [1,6,3]
+		name: null,
+		date: [1,2,3],
+		deadline: '77/77/7777 77:77',
+		tasks: 'aa'
 	})
-  .set('Accept', 'application/json')
-  .expect(201)
-	.then(r => {
-		return request(app)
-		.put(path+'/2')
-		.send({
-			name: 123,
-			date: null,
-			deadline: '31/12/2055 01:11',
-			tasks: [1,6,3]
-		})
-		.set('Accept', 'application/json')
-		.expect(400)
-	})
+	.set('Accept', 'application/json')
+	.expect(202)
 
   done();
 });
