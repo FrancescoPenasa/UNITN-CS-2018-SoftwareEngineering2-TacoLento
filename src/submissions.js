@@ -187,7 +187,7 @@ submissions.post('/submissions/', function (req, res)
 submissions.get('/:id', async(req,res) => 
 {
 	let id = req.params.id;
-	if(!(id_validity(id)))
+	if(!(userId_validity(id)))
 	{
 		res.status(400)
 		return res.send("invalid id")
