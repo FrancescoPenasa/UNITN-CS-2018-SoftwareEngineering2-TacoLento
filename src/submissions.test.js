@@ -115,7 +115,7 @@ test('POST /submissions', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with data already exist must return conflict
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ already exist', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "27/11/2018",
@@ -129,7 +129,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with wrong data input must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ wrong data', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : 27122018,
@@ -143,7 +143,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with wrong userId input must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ wrong userId', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : "27/11/2018",
@@ -157,7 +157,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with wrong examId input must return bad request 400 
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ wrong examId', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : "27/11/2018",
@@ -171,7 +171,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with wronge taskId must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ wrong taskId', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : "27/11/2018",
@@ -185,7 +185,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with null id must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ id null', (done) => {
 	request(app).post('/submissions').send({
 			id : null,
 			date : "27/11/2018",
@@ -199,7 +199,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with null date must return bad request 400 
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ data null', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : null,
@@ -213,7 +213,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with null userId must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ userId null', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : "27/11/2018",
@@ -227,7 +227,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with null examId must return bad request 400 
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ examId null', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : "27/11/2018",
@@ -241,7 +241,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with null taskId must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ taskId null', (done) => {
 	request(app).post('/submissions').send({
 			id : 3,
 			date : "27/11/2018",
@@ -255,7 +255,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with id=-1 must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ id -1', (done) => {
 	request(app).post('/submissions').send({
 			id : -1,
 			date : "27/11/2018",
@@ -269,7 +269,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with not integer id must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ id 1.1', (done) => {
 	request(app).post('/submissions').send({
 			id : 1.1,
 			date : "27/11/2018",
@@ -283,7 +283,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with userid=-1 must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ userId -1', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "27/11/2018",
@@ -297,7 +297,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with not integer userId must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ userId 1.1', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "27/11/2018",
@@ -311,7 +311,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with examId=-2 must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ examId -2', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "27/11/2018",
@@ -325,7 +325,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with not integer examid must return bad request 400
 //------------------------------------------------------
-test('POST /submissions/', (done) => {
+test('POST /submissions/ examid 2.1', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "27/11/2018",
@@ -339,7 +339,7 @@ test('POST /submissions/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with taskId=-1 must return bad request 400
 //------------------------------------------------------
-test('POST /submission/', (done) => {
+test('POST /submission/ taskId -1', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "27/11/2018",
@@ -353,7 +353,7 @@ test('POST /submission/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with not integer taskId must return bad request 400
 //------------------------------------------------------
-test('POST /submission/', (done) => {
+test('POST /submission/ taskId 1.1', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "27/11/2018",
@@ -367,7 +367,7 @@ test('POST /submission/', (done) => {
 //------------------------------------------------------
 // POST /submissions/ with empty data must return bad request 400
 //------------------------------------------------------
-test('POST /submission/', (done) => {
+test('POST /submission/ empty data', (done) => {
 	request(app).post('/submissions').send({
 			id : 1,
 			date : "",
