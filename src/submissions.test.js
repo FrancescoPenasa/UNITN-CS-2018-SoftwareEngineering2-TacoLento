@@ -18,18 +18,30 @@ test('get /submissions/', async () => {
 
 
 //------------------------------------------------------
-// GET /submissions/1 must return status and json 
+// GET /submissions/3 must return status and json 
 //------------------------------------------------------
-test('get /submissions/1', async () => {
-	const response = await request(app).get('/submissions/1');
-	expect (response.status).toEqual(200);
-	expect (response.text).toEqual([{id: 1, date: '23 novembre 2018', userId: 1, examId: 1, answer: [{idTask: 1, answer: 'test'}]}]);
+test('get /submissions/1', (done) => {
+	request(app).post('/submissions').send({
+			id : 3,
+			date : "27/11/2018",
+			userId : 1,
+			examId : 2,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+		{
+			return request(app).get('/submissions/3'),then((response)  => 
+					{
+						expect(response.statusCode).toBe(200);
+						expect (typeof response.body).toEqual('object');
+					})
+		})
+	
 });
 
 //------------------------------------------------------
 // GET /submissions/abc must return error  
 //------------------------------------------------------
-test('get /submissions/abc', async () => {
+test('get /submissions/abc', (done) => {
 	request(app).get('/submissions/abc').then((response) =>
 	{
 		expect (response.statusCode).toBe(400);
@@ -40,7 +52,7 @@ test('get /submissions/abc', async () => {
 //------------------------------------------------------
 // GET /submissions/1.1 must return error  
 //------------------------------------------------------
-test('get /submissions/1.1', async () => {
+test('get /submissions/1.1', (done) => {
 	request(app).get('/submissions/1.1').then((response) =>
 	{
 		expect (response.statusCode).toBe(400);
@@ -51,7 +63,7 @@ test('get /submissions/1.1', async () => {
 //------------------------------------------------------
 // GET /submissions/-1 must return error  
 //------------------------------------------------------
-test('get /submissions/-1', async () => {
+test('get /submissions/-1', (done) => {
 	request(app).get('/submissions/-1').then((response) =>
 	{
 		expect (response.statusCode).toBe(400);
@@ -62,7 +74,7 @@ test('get /submissions/-1', async () => {
 //------------------------------------------------------
 // GET /submissions/5 must return not found
 //------------------------------------------------------
-test('get /submissions/5', async () => {
+test('get /submissions/5', (done) => {
 	request(app).get('/submissions/1000').then((response) =>
 	{
 		expect (response.statusCode).toBe(404);
