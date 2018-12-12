@@ -10,11 +10,23 @@ var app = require('../index');
 //------------------------------------------------------
 // GET /submissions/ with no empty submissions list must return 200 and the entire sub list
 //------------------------------------------------------
-test('get /submissions/', async () => {
-	const response = await request(app).get('/submissions');
-	expect (response.status).toEqual(200);
-	expect (response.text).toContain([{id: 1, date: '23 novembre 2018', userId: 1, examId: 1, answer: [{idTask: 1, answer: 'test'}]}]);
+test('get /submissions/', (done) => {
+	request(app).post('/submissions').send({
+			id : 1,
+			date : "27/11/2018",
+			userId : 1,
+			examId : 2,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+		{
+		return request(app).get('/submissions').then((response) =>
+		{
+			expect(response.statusCode).toBe(302);
+			expect (typeof response.body).toEqual('object');
+		})});
+		done();
 });
+
 
 
 //------------------------------------------------------
@@ -29,7 +41,7 @@ test('get /submissions/1', (done) => {
 			answer: [1,"test"]
 	}).set('Accept', 'application/json').expect(201).then(r =>
 		{
-			return request(app).get('/submissions/3'),then((response)  => 
+			return request(app).get('/submissions/3').then((response)  => 
 					{
 						expect(response.statusCode).toBe(302);
 						expect (typeof response.body).toEqual('object');
@@ -45,8 +57,8 @@ test('get /submissions/abc', (done) => {
 	request(app).get('/submissions/abc').then((response) =>
 	{
 		expect (response.statusCode).toBe(400);
-		done();
 	});
+	done();
 });
 
 //------------------------------------------------------
@@ -56,8 +68,8 @@ test('get /submissions/1.1', (done) => {
 	request(app).get('/submissions/1.1').then((response) =>
 	{
 		expect (response.statusCode).toBe(400);
-		done();
 	});
+	done();
 });
 
 //------------------------------------------------------
@@ -67,8 +79,8 @@ test('get /submissions/-1', (done) => {
 	request(app).get('/submissions/-1').then((response) =>
 	{
 		expect (response.statusCode).toBe(400);
-		done();
 	});
+	done();
 });
 
 //------------------------------------------------------
