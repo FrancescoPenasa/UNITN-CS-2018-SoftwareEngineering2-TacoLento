@@ -35,7 +35,7 @@ test('get /submissions/1', (done) => {
 						expect (typeof response.body).toEqual('object');
 					})
 		})
-	
+	done();
 });
 
 //------------------------------------------------------
@@ -72,14 +72,14 @@ test('get /submissions/-1', (done) => {
 });
 
 //------------------------------------------------------
-// GET /submissions/5 must return not found
+// GET /submissions/1000 must return not found
 //------------------------------------------------------
-test('get /submissions/5', (done) => {
+test('get /submissions/1000', (done) => {
 	request(app).get('/submissions/1000').then((response) =>
 	{
 		expect (response.statusCode).toBe(404);
-		done();
 	});
+	done();
 });
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
