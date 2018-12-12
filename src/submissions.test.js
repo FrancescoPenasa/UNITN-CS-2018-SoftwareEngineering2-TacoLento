@@ -717,10 +717,19 @@ test('PUT /submissions/id', (done) =>
 //------------------------------------------------------
 // DELETE /submissions/id with valid and exist id must return 200
 //------------------------------------------------------
-test('delete /submission/id', async () => 
+test('delete /submission/id', (done) => 
 {
-	const response = await request(app).delete('/submissions/1');
-	expect(response.status).toEqual(200);
+	request(app).post('/submissions').send({
+			id : 3,
+			date : "27/11/2018",
+			userId : 1,
+			examId : 2,
+			answer: [1,"test"]
+	}).set('Accept', 'application/json').expect(201).then(r =>
+		{
+			return request(app).delete('/submissions/3').expect(response.status).toEqual(202)
+		})
+	done();
 });
 
 //------------------------------------------------------
