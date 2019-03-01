@@ -2,10 +2,10 @@
   "name": "tacolento_project",
   "version": "1.0.0",
   "description": "Progetto per il corso di Ingegneria del Software 2 - UNITN",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "jest"
+    "start": "node server.js",
+    "test": "jest-run"
   },
   "repository": {
     "type": "git",
@@ -18,13 +18,17 @@
   },
   "homepage": "https://github.com/FrancescoPenasa/TacoLento_project#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "node-fetch": "^2.3.0",
+    "supertest": "^3.3.0"
   },
   "jest": {
     "verbose": true,
     "collectCoverage": true
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jest-run": "^1.0.0"
   }
 }
